@@ -1,26 +1,292 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #f0f0f3;
+  --border: #e4e4e9;
+  --fg: #1a1a1f;
+  --muted: #6b6b76;
+  --accent: #f59e0b;
+  --accent-fg: #1a1a1f;
+  --easy: #00a693;
+  --medium: #d99a00;
+  --hard: #e5484d;
+  --link: #2563eb;
+  --code-bg: #f3f3f6;
+  color-scheme: light;
+}
+
+/* Dark: follows the OS unless the user picked a theme (data-theme on <html>, set before paint). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111114;
+    --surface: #1a1a1f;
+    --surface-2: #232329;
+    --border: #2e2e36;
+    --fg: #ececf1;
+    --muted: #9a9aa6;
+    --accent: #ffa116;
+    --accent-fg: #111114;
+    --easy: #00b8a3;
+    --medium: #ffc01e;
+    --hard: #ef4743;
+    --link: #6ea8fe;
+    --code-bg: #232329;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111114;
+  --surface: #1a1a1f;
+  --surface-2: #232329;
+  --border: #2e2e36;
+  --fg: #ececf1;
+  --muted: #9a9aa6;
+  --accent: #ffa116;
+  --accent-fg: #111114;
+  --easy: #00b8a3;
+  --medium: #ffc01e;
+  --hard: #ef4743;
+  --link: #6ea8fe;
+  --code-bg: #232329;
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-easy: var(--easy);
+  --color-medium: var(--medium);
+  --color-hard: var(--hard);
+  --color-link: var(--link);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-border bg-surface;
+  }
+  .input {
+    @apply rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium transition hover:bg-surface-2 disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg bg-accent px-3 py-2 text-sm font-semibold text-accent-fg transition hover:brightness-95 disabled:opacity-60;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-muted transition hover:bg-surface-2 hover:text-fg;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full bg-surface-2 px-2 py-0.5 text-xs text-muted;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ───────── Rich text (statements & notes) ───────── */
+.doc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.doc:focus {
+  outline: none;
+}
+.doc > * + * {
+  margin-top: 0.75em;
+}
+.doc h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 1.2em;
+}
+.doc h2 {
+  font-size: 1.25rem;
+  font-weight: 650;
+  margin-top: 1.1em;
+}
+.doc h3 {
+  font-size: 1.05rem;
+  font-weight: 650;
+  margin-top: 1em;
+}
+.doc ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+.doc ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+.doc li > p {
+  margin: 0.15em 0;
+}
+.doc a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.doc blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 1rem;
+  color: var(--muted);
+}
+.doc code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+}
+.doc pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+.doc pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+.doc img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+  background: #fff;
+}
+.doc img.ProseMirror-selectednode {
+  outline: 2px solid var(--accent);
+}
+.doc hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1.25em 0;
+}
+.doc table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+  display: block;
+  overflow-x: auto;
+}
+.doc th,
+.doc td {
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.6rem;
+  vertical-align: top;
+  min-width: 3rem;
+}
+.doc th {
+  background: var(--surface-2);
+  font-weight: 600;
+  text-align: left;
+}
+.doc .selectedCell {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.doc p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+.doc a.file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 100%;
+  padding: 0.45rem 0.75rem 0.45rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--fg);
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc a.file-chip:hover {
+  border-color: var(--accent);
+}
+.doc .ProseMirror-selectednode.file-chip,
+.doc a.file-chip.ProseMirror-selectednode {
+  outline: 2px solid var(--accent);
+}
+.doc .file-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  height: 1.9rem;
+  padding: 0 0.3rem;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+.doc .file-chip-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.doc .file-chip-size {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+/* "Example 1:" blocks written as <pre> with bold labels look like LeetCode */
+.doc pre strong {
+  color: var(--fg);
+}
+
+/* highlight.js tokens */
+.hljs-comment,
+.hljs-quote {
+  color: #8b8b96;
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in {
+  color: #c678dd;
+}
+.hljs-string,
+.hljs-attr {
+  color: #4fa66a;
+}
+.hljs-number,
+.hljs-literal {
+  color: #d19a66;
+}
+.hljs-title,
+.hljs-function {
+  color: #3b8eea;
+}
+.hljs-type {
+  color: #d4a72c;
 }

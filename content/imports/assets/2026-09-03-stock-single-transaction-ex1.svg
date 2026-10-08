@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="150" viewBox="0 0 360 150" font-family="Arial, sans-serif">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#555"/></marker></defs>
+<rect width="360" height="150" fill="#ffffff"/>
+<text x="180" y="22" text-anchor="middle" font-size="14" fill="#333">Any gap: buy at 1 (day 1), sell at 6 (day 4), profit 5</text>
+<rect x="60" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="80" y="66" text-anchor="middle" font-size="16" fill="#111">7</text>
+<text x="80" y="96" text-anchor="middle" font-size="12" fill="#888">0</text>
+<rect x="100" y="40" width="40" height="40" fill="#fff4e0" stroke="#f59e0b" stroke-width="2"/>
+<text x="120" y="66" text-anchor="middle" font-size="16" fill="#111">1</text>
+<text x="120" y="96" text-anchor="middle" font-size="12" fill="#888">1</text>
+<rect x="140" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="160" y="66" text-anchor="middle" font-size="16" fill="#111">5</text>
+<text x="160" y="96" text-anchor="middle" font-size="12" fill="#888">2</text>
+<rect x="180" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="200" y="66" text-anchor="middle" font-size="16" fill="#111">3</text>
+<text x="200" y="96" text-anchor="middle" font-size="12" fill="#888">3</text>
+<rect x="220" y="40" width="40" height="40" fill="#fff4e0" stroke="#f59e0b" stroke-width="2"/>
+<text x="240" y="66" text-anchor="middle" font-size="16" fill="#111">6</text>
+<text x="240" y="96" text-anchor="middle" font-size="12" fill="#888">4</text>
+<rect x="260" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="280" y="66" text-anchor="middle" font-size="16" fill="#111">4</text>
+<text x="280" y="96" text-anchor="middle" font-size="12" fill="#888">5</text>
+<line x1="120" y1="130" x2="120" y2="106" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<text x="120" y="146" text-anchor="middle" font-size="13" fill="#333">buy</text>
+<line x1="240" y1="130" x2="240" y2="106" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<text x="240" y="146" text-anchor="middle" font-size="13" fill="#333">sell</text>
+</svg>

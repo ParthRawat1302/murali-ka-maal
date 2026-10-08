@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="150" viewBox="0 0 400 150" font-family="Arial, sans-serif">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#555"/></marker></defs>
+<rect width="400" height="150" fill="#ffffff"/>
+<text x="200" y="22" text-anchor="middle" font-size="14" fill="#333">Unrestricted: [3, 4, -1, 2], sum 8, length 4</text>
+<rect x="40" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="60" y="66" text-anchor="middle" font-size="16" fill="#111">1</text>
+<text x="60" y="96" text-anchor="middle" font-size="12" fill="#888">0</text>
+<rect x="80" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="100" y="66" text-anchor="middle" font-size="16" fill="#111">-2</text>
+<text x="100" y="96" text-anchor="middle" font-size="12" fill="#888">1</text>
+<rect x="120" y="40" width="40" height="40" fill="#fff4e0" stroke="#f59e0b" stroke-width="2"/>
+<text x="140" y="66" text-anchor="middle" font-size="16" fill="#111">3</text>
+<text x="140" y="96" text-anchor="middle" font-size="12" fill="#888">2</text>
+<rect x="160" y="40" width="40" height="40" fill="#fff4e0" stroke="#f59e0b" stroke-width="2"/>
+<text x="180" y="66" text-anchor="middle" font-size="16" fill="#111">4</text>
+<text x="180" y="96" text-anchor="middle" font-size="12" fill="#888">3</text>
+<rect x="200" y="40" width="40" height="40" fill="#fff4e0" stroke="#f59e0b" stroke-width="2"/>
+<text x="220" y="66" text-anchor="middle" font-size="16" fill="#111">-1</text>
+<text x="220" y="96" text-anchor="middle" font-size="12" fill="#888">4</text>
+<rect x="240" y="40" width="40" height="40" fill="#fff4e0" stroke="#f59e0b" stroke-width="2"/>
+<text x="260" y="66" text-anchor="middle" font-size="16" fill="#111">2</text>
+<text x="260" y="96" text-anchor="middle" font-size="12" fill="#888">5</text>
+<rect x="280" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="300" y="66" text-anchor="middle" font-size="16" fill="#111">-6</text>
+<text x="300" y="96" text-anchor="middle" font-size="12" fill="#888">6</text>
+<rect x="320" y="40" width="40" height="40" fill="#ffffff" stroke="#555" stroke-width="2"/>
+<text x="340" y="66" text-anchor="middle" font-size="16" fill="#111">5</text>
+<text x="340" y="96" text-anchor="middle" font-size="12" fill="#888">7</text>
+<line x1="140" y1="130" x2="140" y2="106" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<text x="140" y="146" text-anchor="middle" font-size="13" fill="#333">start</text>
+<line x1="260" y1="130" x2="260" y2="106" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<text x="260" y="146" text-anchor="middle" font-size="13" fill="#333">end</text>
+</svg>

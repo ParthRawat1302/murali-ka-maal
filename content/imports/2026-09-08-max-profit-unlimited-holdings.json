@@ -1,0 +1,14 @@
+{
+  "title": "Maximum Profit with Unlimited Stock Holdings",
+  "difficulty": "hard",
+  "topics": [
+    "Array",
+    "Greedy",
+    "Heap (Priority Queue)"
+  ],
+  "source_type": "class_notes",
+  "source_label": "Heaps (to be discussed in class)",
+  "source_date": "2026-09-08",
+  "leetcode_url": null,
+  "statement_html": "<p>You are given an integer array <code>prices</code>, where <code>prices[i]</code> is the price of a stock on day <code>i</code>.</p><p>On each day you may do <strong>exactly one</strong> of the following: buy one share, sell one share you own, or do nothing. You may hold any number of shares at the same time, and you start with none.</p><p>Return <em>the maximum total profit</em> you can earn.</p><p><strong>Example 1:</strong></p><pre><code class=\"language-plaintext\">Input: prices = [10,5,4,7,9,12,6,2,10]\nOutput: 20\nExplanation: Buy at 5 and 4, sell at 9 and 12, then buy at 2 and sell at 10.\nProfit = (9 + 12 - 5 - 4) + (10 - 2) = 20.</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input: prices = [1,2,3,4]\nOutput: 4\nExplanation: Buy on days 0 and 1, sell on days 2 and 3: (3 + 4) - (1 + 2) = 4.</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input: prices = [5,4,3]\nOutput: 0\nExplanation: Prices only fall, so it is best not to trade.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= prices.length &lt;= 10<sup>5</sup></code></p></li><li><p><code>1 &lt;= prices[i] &lt;= 10<sup>6</sup></code></p></li></ul><p><em>Similar to <a href=\"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/\">LeetCode #122. Best Time to Buy and Sell Stock II</a> (differs in: you may hold many shares at once, but trade at most one share per day).</em></p>"
+}

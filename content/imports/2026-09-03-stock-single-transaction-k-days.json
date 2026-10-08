@@ -1,0 +1,18 @@
+{
+  "title": "Maximum Profit from a Single Stock Transaction with Day Gaps",
+  "difficulty": "medium",
+  "topics": [
+    "Array",
+    "Dynamic Programming",
+    "Sliding Window",
+    "Monotonic Queue"
+  ],
+  "source_type": "class_notes",
+  "source_label": "Part A",
+  "source_date": "2026-09-03",
+  "leetcode_url": null,
+  "assets": {
+    "2026-09-03-stock-single-transaction-ex1.svg": "assets/2026-09-03-stock-single-transaction-ex1.svg"
+  },
+  "statement_html": "<p>You are given an integer array <code>prices</code> of length <code>n</code>, where <code>prices[i]</code> is the price of a stock on day <code>i</code>, and an integer <code>k</code>.</p><p>You must make <strong>exactly one</strong> transaction: buy one share on some day <code>i</code> and sell it on a later day <code>j</code> (<code>i &lt; j</code>). The profit is <code>prices[j] - prices[i]</code>, which may be negative.</p><p>Return an array <code>answer</code> of length 4, where <code>answer[c]</code> is the maximum profit under condition <code>c</code>:</p><ol><li><p><code>answer[0]</code>: the stock is sold any time after it is bought (<code>j - i &gt;= 1</code>).</p></li><li><p><code>answer[1]</code>: sold <strong>exactly</strong> <code>k</code> days after it is bought (<code>j - i == k</code>).</p></li><li><p><code>answer[2]</code>: sold <strong>at least</strong> <code>k</code> days after it is bought (<code>j - i &gt;= k</code>).</p></li><li><p><code>answer[3]</code>: sold <strong>at most</strong> <code>k</code> days after it is bought (<code>1 &lt;= j - i &lt;= k</code>).</p></li></ol><p>Each case must be solved in <code>O(n)</code> time.</p><p><strong>Example 1:</strong></p><img src=\"asset:2026-09-03-stock-single-transaction-ex1.svg\" alt=\"prices [7,1,5,3,6,4] with buy on day 1 and sell on day 4\"><pre><code class=\"language-plaintext\">Input: prices = [7,1,5,3,6,4], k = 2\nOutput: [5,2,5,4]\nExplanation:\n- Any gap: buy at 1 (day 1), sell at 6 (day 4): 5.\n- Gap exactly 2: buy at 1 (day 1), sell at 3 (day 3): 2.\n- Gap at least 2: buy at 1 (day 1), sell at 6 (day 4), gap 3: 5.\n- Gap at most 2: buy at 1 (day 1), sell at 5 (day 2): 4.</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input: prices = [9,7,4,3,1], k = 1\nOutput: [-1,-1,-1,-1]\nExplanation: Prices only fall, so the best forced transaction loses 1 (e.g. buy at 4, sell at 3 the next day).</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input: prices = [3,8,2,9,1,6], k = 3\nOutput: [7,6,6,7]\nExplanation:\n- Any gap: buy at 2 (day 2), sell at 9 (day 3): 7.\n- Gap exactly 3: buy at 3 (day 0), sell at 9 (day 3): 6.\n- Gap at least 3: the same pair: 6.\n- Gap at most 3: buy at 2 (day 2), sell at 9 (day 3): 7.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>2 &lt;= n == prices.length &lt;= 10<sup>5</sup></code></p></li><li><p><code>0 &lt;= prices[i] &lt;= 10<sup>9</sup></code></p></li><li><p><code>1 &lt;= k &lt;= n - 1</code></p></li></ul><p><em>Similar to <a href=\"https://leetcode.com/problems/best-time-to-buy-and-sell-stock/\">LeetCode #121. Best Time to Buy and Sell Stock</a> (differs in: exactly one transaction is forced, so profit can be negative, plus the exactly / at least / at most k day-gap conditions).</em></p>"
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Maximum-Sum Subarray with Length Constraints",
+  "difficulty": "medium",
+  "topics": [
+    "Array",
+    "Prefix Sum",
+    "Sliding Window",
+    "Monotonic Queue"
+  ],
+  "source_type": "class_notes",
+  "source_label": "Part B",
+  "source_date": "2026-09-03",
+  "leetcode_url": null,
+  "assets": {
+    "2026-09-03-max-sum-subarray-length-ex1.svg": "assets/2026-09-03-max-sum-subarray-length-ex1.svg"
+  },
+  "statement_html": "<p>You are given an integer array <code>nums</code> of length <code>n</code> and an integer <code>k</code>. Find a non-empty contiguous subarray with the maximum sum under each of the following conditions on its length <code>L</code>:</p><ol><li><p>the length is unrestricted (<code>1 &lt;= L &lt;= n</code>),</p></li><li><p>the length is <strong>exactly</strong> <code>k</code>,</p></li><li><p>the length is <strong>at least</strong> <code>k</code>,</p></li><li><p>the length is <strong>at most</strong> <code>k</code>.</p></li></ol><p>Return a 4 × 2 array <code>answer</code> where <code>answer[c] = [sum, length]</code> for condition <code>c</code>: the maximum sum, and the length of a subarray achieving it. If several subarrays achieve the maximum sum, report the <strong>smallest</strong> such length.</p><p>Each case must be solved in <code>O(n)</code> time.</p><p><strong>Example 1:</strong></p><img src=\"asset:2026-09-03-max-sum-subarray-length-ex1.svg\" alt=\"array [1,-2,3,4,-1,2,-6,5] with the subarray at indices 2..5 highlighted\"><pre><code class=\"language-plaintext\">Input: nums = [1,-2,3,4,-1,2,-6,5], k = 3\nOutput: [[8,4],[6,3],[8,4],[7,2]]\nExplanation:\n- Unrestricted: [3,4,-1,2] has sum 8.\n- Exactly 3: [3,4,-1] has sum 6.\n- At least 3: [3,4,-1,2] has sum 8 (length 4).\n- At most 3: [3,4] has sum 7.</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input: nums = [-3,-1,-2], k = 2\nOutput: [[-1,1],[-3,2],[-3,2],[-1,1]]\nExplanation: All numbers are negative, so the best unrestricted / at-most-2 subarray is [-1]. With length 2 or more, [-1,-2] (sum -3) is best.</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input: nums = [2,-1,2,-5,4], k = 2\nOutput: [[4,1],[1,2],[3,3],[4,1]]\nExplanation:\n- Unrestricted and at most 2: [4] has sum 4.\n- Exactly 2: [2,-1] or [-1,2] has sum 1.\n- At least 2: [2,-1,2] has sum 3.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= n == nums.length &lt;= 10<sup>5</sup></code></p></li><li><p><code>-10<sup>4</sup> &lt;= nums[i] &lt;= 10<sup>4</sup></code></p></li><li><p><code>1 &lt;= k &lt;= n</code></p></li></ul><p><em>Similar to <a href=\"https://leetcode.com/problems/maximum-subarray/\">LeetCode #53. Maximum Subarray</a> (differs in: the exactly / at least / at most k length conditions, and the length is reported too).</em></p>"
+}

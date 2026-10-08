@@ -1,0 +1,14 @@
+{
+  "leetcode_url": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
+  "source_type": "email",
+  "source_label": null,
+  "source_date": "2026-08-12",
+  "topics": [],
+  "notes": [
+    {
+      "title": "Teacher's hint",
+      "visibility": "public",
+      "html": "<p>Read first: <a href=\"https://www.geeksforgeeks.org/k-th-element-two-sorted-arrays/\">K-th element of two sorted arrays (GeeksforGeeks)</a>. The median is the k-th smallest element of the merged array with k = (m+n)/2, found by binary search without merging.</p>"
+    }
+  ]
+}
