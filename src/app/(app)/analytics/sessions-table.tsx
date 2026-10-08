@@ -1,5 +1,6 @@
 "use client";
 
+import { device } from "@/lib/device";
 import { useState } from "react";
 import { formatDateTime, formatDuration, timeAgo } from "@/lib/dates";
 
@@ -24,12 +25,6 @@ export type UserSummary = {
   edits: number;
 };
 
-function device(ua: string | null) {
-  if (!ua) return "—";
-  const os = /Android/.test(ua) ? "Android" : /iPhone|iPad/.test(ua) ? "iOS" : /Windows/.test(ua) ? "Windows" : /Mac OS/.test(ua) ? "macOS" : /Linux/.test(ua) ? "Linux" : "Other";
-  const br = /Edg\//.test(ua) ? "Edge" : /Chrome\//.test(ua) ? "Chrome" : /Firefox\//.test(ua) ? "Firefox" : /Safari\//.test(ua) ? "Safari" : "Browser";
-  return `${br} · ${os}`;
-}
 
 export function SessionsTable({
   sessions,

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HoursHeatmap } from "@/components/activity/hours-heatmap";
 import { ActivityTracks, WrapList } from "@/components/activity/activity-view";
+import { SessionLog } from "@/components/activity/session-log";
 import {
   addDays,
   currentStreak,
@@ -67,6 +68,8 @@ export default async function ActivityPage() {
       <WrapList wraps={wraps} />
 
       <ActivityTracks tracks={tracks} />
+
+      <SessionLog userId={profile.id} />
     </div>
   );
 }
