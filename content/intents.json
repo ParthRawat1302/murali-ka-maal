@@ -167,6 +167,25 @@
       }
     },
     {
+      "source_type": "domjudge",
+      "source_label": "Practice Set 1",
+      "source_date": "2026-09-02",
+      "intended": {
+        "Sum of Digits": [
+          "Math"
+        ],
+        "Good Index Pairs": [
+          "Merge Sort"
+        ],
+        "Reverse the Digits of a Number": [
+          "Math"
+        ],
+        "Maximum-Sum Bounded Subarray Length": [
+          "Monotonic Queue"
+        ]
+      }
+    },
+    {
       "source_type": "class_notes",
       "source_label": null,
       "source_date": "2026-09-03",
@@ -222,6 +241,31 @@
         ],
         "Data Structure Supporting Median Deletion": [
           "Heap (Priority Queue)"
+        ]
+      }
+    },
+    {
+      "source_type": "domjudge",
+      "source_label": "Stacks and Queues",
+      "source_date": "2026-09-14",
+      "intended": {
+        "minimum-number-of-k-consecutive-bit-flips": [
+          "Queue"
+        ],
+        "dota2-senate": [
+          "Queue"
+        ],
+        "Circular Game (Josephus Problem)": [
+          "Math"
+        ],
+        "Maximum-Sum Bounded Subarray Length": [
+          "Monotonic Queue"
+        ],
+        "remove-k-digits": [
+          "Stack"
+        ],
+        "number-of-valid-subarrays": [
+          "Stack"
         ]
       }
     },

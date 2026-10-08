@@ -1,0 +1,18 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Practice Set 1",
+  "source_date": "2026-09-02",
+  "title": "Maximum-Sum Bounded Subarray Length",
+  "difficulty": "medium",
+  "topics": [
+    "Array",
+    "Prefix Sum",
+    "Sliding Window",
+    "Monotonic Queue"
+  ],
+  "leetcode_url": null,
+  "assets": {
+    "2026-09-02-max-sum-bounded-length-ex1.svg": "assets/2026-09-02-max-sum-bounded-length-ex1.svg"
+  },
+  "statement_html": "<p>Given a sequence of <code>n</code> integers <code>a</code> and an integer <code>k</code>, consider all non-empty contiguous subarrays whose length is <strong>at most</strong> <code>k</code>.</p><p>Find the length of a subarray with the maximum possible sum. If several eligible subarrays have the same maximum sum, print the <strong>greatest</strong> length among them.</p><p>Your algorithm should run in linear time.</p><p><strong>Input:</strong> the first line has <code>n</code> and <code>k</code>; the second line has <code>a[0..n-1]</code>.</p><p><strong>Output:</strong> one integer: the greatest length among all maximum-sum non-empty subarrays of length at most <code>k</code>.</p><p><strong>Example 1:</strong></p><img src=\"asset:2026-09-02-max-sum-bounded-length-ex1.svg\" alt=\"array -2,3,1,-5,4,6,-1 with 4 and 6 highlighted\"><pre><code class=\"language-plaintext\">Input:\n7 4\n-2 3 1 -5 4 6 -1\nOutput: 2\nExplanation: The maximum sum is 10, from the subarray [4, 6] of length 2.</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input:\n5 3\n1 0 0 -5 1\nOutput: 3\nExplanation: The maximum sum is 1. Both [1] and [1, 0, 0] have it; the greatest length is 3.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= n &lt; 10<sup>6</sup></code></p></li><li><p><code>1 &lt;= k &lt;= n</code></p></li><li><p><code>-10<sup>15</sup> &lt;= a[i] &lt;= 10<sup>15</sup></code></p></li><li><p>Sums can exceed 64 bits; the reference C++ solution uses <code>__int128</code> internally.</p></li></ul><p><em>Similar to the 3 Sep class problem \"Maximum-Sum Subarray with Length Constraints\" (at most k case) and <a href=\"https://leetcode.com/problems/maximum-subarray/\">LeetCode #53. Maximum Subarray</a> (differs in: length at most k, and the greatest length is reported).</em></p>"
+}

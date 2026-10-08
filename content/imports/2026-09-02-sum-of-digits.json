@@ -1,0 +1,12 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Practice Set 1",
+  "source_date": "2026-09-02",
+  "title": "Sum of Digits",
+  "difficulty": "easy",
+  "topics": [
+    "Math"
+  ],
+  "leetcode_url": null,
+  "statement_html": "<p>Given a non-negative integer <code>N</code>, calculate the sum of all its digits.</p><p><strong>Input:</strong> one non-negative integer <code>N</code>.</p><p><strong>Output:</strong> a single integer, the sum of the digits of <code>N</code>.</p><p><strong>Example 1:</strong></p><pre><code class=\"language-plaintext\">Input: 5823\nOutput: 18\nExplanation: The digits of 5823 are 5, 8, 2 and 3. Their sum is 18.</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input: 0\nOutput: 0</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input: 1000000000000000000\nOutput: 1</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>0 &lt;= N &lt;= 10<sup>18</sup></code> (use a 64-bit integer)</p></li></ul><p><em>Similar to <a href=\"https://leetcode.com/problems/sum-of-digits-in-base-k/\">LeetCode #1837. Sum of Digits in Base K</a> (differs in: always base 10, and N can be up to 10<sup>18</sup>).</em></p>"
+}

@@ -1,0 +1,14 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Stacks and Queues",
+  "source_date": "2026-09-14",
+  "title": "Number of Valid Subarrays",
+  "difficulty": "hard",
+  "topics": [
+    "Array",
+    "Stack",
+    "Monotonic Stack"
+  ],
+  "leetcode_url": "https://leetcode.com/problems/number-of-valid-subarrays/",
+  "statement_html": "<p>Given an integer array <code>nums</code>, return the number of valid subarrays.</p><p>A subarray <code>nums[i..j]</code> (<code>i &lt;= j</code>) is <strong>valid</strong> if <code>nums[i]</code> is the minimum element of that subarray, i.e. the leftmost element is not larger than any other element in it.</p><p><strong>Input:</strong> line 1 has <code>n</code>; line 2 has the <code>n</code> integers of <code>nums</code>.</p><p><strong>Output:</strong> a single integer: the number of valid subarrays.</p><p><strong>Example 1:</strong></p><pre><code class=\"language-plaintext\">Input:\n5\n1 4 2 5 3\nOutput: 11\nExplanation: [1], [4], [2], [5], [3], [1,4], [2,5], [1,4,2], [2,5,3], [1,4,2,5], [1,4,2,5,3].</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input:\n3\n3 2 1\nOutput: 3\nExplanation: Only the single-element subarrays.</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input:\n3\n1 1 1\nOutput: 6\nExplanation: Every subarray is valid.</code></pre><p><strong>Example 4:</strong></p><pre><code class=\"language-plaintext\">Input:\n1\n5\nOutput: 1</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= n &lt;= 10<sup>5</sup></code></p></li><li><p><code>-10<sup>5</sup> &lt;= nums[i] &lt;= 10<sup>5</sup></code></p></li></ul><p><em>This is LeetCode #1063 (premium), so the statement here is written from the DomJudge version.</em></p>"
+}

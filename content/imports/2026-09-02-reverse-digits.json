@@ -1,0 +1,12 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Practice Set 1",
+  "source_date": "2026-09-02",
+  "title": "Reverse the Digits of a Number",
+  "difficulty": "easy",
+  "topics": [
+    "Math"
+  ],
+  "leetcode_url": null,
+  "statement_html": "<p>Given a positive integer <code>N</code>, reverse its decimal digits and output the reversed integer without leading zeros.</p><p><strong>Input:</strong> a single integer <code>N</code>.</p><p><strong>Output:</strong> the reversed integer.</p><p><strong>Example 1:</strong></p><pre><code class=\"language-plaintext\">Input: 12345\nOutput: 54321</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input: 1000\nOutput: 1\nExplanation: \"0001\" without leading zeros is 1.</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input: 987654321\nOutput: 123456789</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= N &lt; 10<sup>18</sup></code> (the reverse also fits in a 64-bit integer)</p></li></ul><p><em>Originally from the CSE 102P DSA Lab (Sec A) Test 1, 4 February 2026.</em></p><p><em>Similar to <a href=\"https://leetcode.com/problems/reverse-integer/\">LeetCode #7. Reverse Integer</a> (differs in: N is positive and up to 10<sup>18</sup>, with no 32-bit overflow rule).</em></p>"
+}
