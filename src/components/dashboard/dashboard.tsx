@@ -6,7 +6,7 @@ import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "rea
 import { Check, FileText, NotebookPen, Repeat, Search, SlidersHorizontal, X } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import { dayKey, formatDay } from "@/lib/dates";
-import { appearances, DIFFICULTIES, SOURCE_TYPES, type QuestionListItem } from "@/lib/types";
+import { appearances, DIFFICULTIES, SOURCE_TYPES, sourceTypeLabel, type QuestionListItem } from "@/lib/types";
 import { DifficultyPill, LeetCodeLogo, SourceBadge } from "@/components/ui";
 import { MultiSelect } from "@/components/multi-select";
 import { TopicChips } from "@/components/topic-chips";
@@ -66,13 +66,17 @@ export function Dashboard({
     return c;
   }, [questions, solved]);
 
+  // one option per set, shown as "Email: Problem Set 1", sorted by type then label
   const labels = useMemo(
-    () =>
-      [
-        ...new Set(
-          questions.flatMap((q) => [q.source_label, ...q.intents.map((i) => i.source_label)]).filter(Boolean) as string[],
-        ),
-      ].sort(),
+    () => {
+      const byLabel = new Map<string, string>();
+      for (const q of questions)
+        for (const a of appearances(q))
+          if (a.source_label && !byLabel.has(a.source_label)) byLabel.set(a.source_label, sourceTypeLabel(a.source_type));
+      return [...byLabel]
+        .map(([label, type]) => ({ label, text: `${type}: ${label}`, type }))
+        .sort((x, y) => x.type.localeCompare(y.type) || x.label.localeCompare(y.label));
+    },
     [questions],
   );
   const usedTopics = useMemo(() => {
@@ -228,8 +232,8 @@ export function Dashboard({
               >
                 <option value="">Any</option>
                 {labels.map((l) => (
-                  <option key={l} value={l}>
-                    {l}
+                  <option key={l.label} value={l.label}>
+                    {l.text}
                   </option>
                 ))}
               </select>
