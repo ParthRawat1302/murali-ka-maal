@@ -4,15 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { JSONContent } from "@tiptap/react";
-import { ArrowLeft, Check, FileText, History, Loader2, NotebookPen, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, Check, Crosshair, FileText, History, Loader2, NotebookPen, Pencil, Trash2 } from "lucide-react";
 import { useApp } from "@/components/app-context";
 import { DocEditor } from "@/components/editor/doc-editor";
 import { QuestionMetaForm, type QuestionMeta } from "@/components/question-meta-form";
 import { DifficultyPill, LeetCodeLogo, SourceBadge } from "@/components/ui";
+import { intentSource, TopicChips } from "@/components/topic-chips";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import { metaToRow, setTopics } from "@/lib/questions";
 import { timeAgo } from "@/lib/dates";
-import type { Note, Question } from "@/lib/types";
+import type { Intent, Note, Question } from "@/lib/types";
 import { NotesTab, type NoteState } from "./notes-tab";
 import { HistoryTab } from "./history-tab";
 
@@ -25,6 +26,7 @@ export function QuestionView({
   initialTopics,
   initialNotes,
   initialSolved,
+  intents,
   allTopics,
   initialTab,
 }: {
@@ -32,6 +34,7 @@ export function QuestionView({
   initialTopics: string[];
   initialNotes: Note[];
   initialSolved: boolean;
+  intents: Intent[];
   allTopics: string[];
   initialTab: Tab;
 }) {
@@ -184,12 +187,20 @@ export function QuestionView({
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <DifficultyPill d={q.difficulty} />
                 <SourceBadge type={q.source_type} label={q.source_label} date={q.source_date} />
-                {topics.map((t) => (
-                  <Link key={t} href={`/?topics=${encodeURIComponent(t)}`} className="chip hover:text-fg">
-                    {t}
-                  </Link>
-                ))}
+                <TopicChips topics={topics} intents={intents} link />
               </div>
+              {intents.length > 0 && (
+                <p className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted">
+                  <Crosshair size={13} className="text-accent" />
+                  <span>Intended method:</span>
+                  {intents.map((i, n) => (
+                    <span key={`${i.topic}-${i.source_date}`}>
+                      <b className="font-medium text-fg">{i.topic}</b> ({intentSource(i)})
+                      {n < intents.length - 1 ? "," : ""}
+                    </span>
+                  ))}
+                </p>
+              )}
               <p className="mt-2 text-xs text-muted">
                 Added {q.created_by && people[q.created_by] ? `by ${people[q.created_by]} ` : ""}
                 {timeAgo(q.created_at)}

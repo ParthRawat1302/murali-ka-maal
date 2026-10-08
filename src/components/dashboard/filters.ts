@@ -79,7 +79,8 @@ export function applyFilters(items: QuestionListItem[], f: Filters, solved: Set<
       if (f.topicMode === "all" ? !topics.every((t) => has.has(t)) : !topics.some((t) => has.has(t))) return false;
     }
     if (f.src.length && !f.src.includes(it.source_type)) return false;
-    if (f.label && (it.source_label ?? "") !== f.label) return false;
+    // a question given again in a later email also counts for that email's label
+    if (f.label && (it.source_label ?? "") !== f.label && !it.intents.some((i) => i.source_label === f.label)) return false;
     if (f.from && it.source_date < f.from) return false;
     if (f.to && it.source_date > f.to) return false;
     if (f.status === "solved" && !solved.has(it.id)) return false;

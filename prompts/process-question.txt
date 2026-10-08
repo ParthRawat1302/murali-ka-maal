@@ -148,6 +148,21 @@ If the teacher gave a solution/approach, add it as a public note:
   "Approach (Claude)" only if the user asks for one).
 
 
+STEP 5B: INTENDED METHOD (WHAT THE TEACHER WANTS IT SOLVED WITH)
+----------------------------------------------------------------
+Many questions can be solved several ways; the teacher gives them to practise the topic being taught.
+For every question from an email / class / test, record that topic in content/intents.json under the
+group for that source (source_type, source_label, source_date), keyed by LeetCode slug or exact title:
+  - Use the email's topic (subject line, "This week: binary search", the ?envId=… in the LeetCode link,
+    e.g. envId=binary-indexed-tree -> "Binary Indexed Tree").
+  - If the question has that topic, use it. If not, pick the closest topic the question DOES have.
+  - Usually ONE topic; at most two when the email explicitly names both. Don't highlight much.
+  - If the question is already listed (Step 2), don't import it again: just add it to the new
+    email's group in content/intents.json, possibly with a different intended topic.
+Then run:  npx tsx scripts/sync-intents.ts
+These topics are shown first and softly highlighted in the question's topic chips.
+
+
 STEP 6: WRITE THE FILE AND IMPORT
 ---------------------------------
 - File: content/imports/<source_date>-<short-slug>.json   (format: content/imports/README.md)

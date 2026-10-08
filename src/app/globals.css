@@ -94,6 +94,10 @@ body {
   .chip {
     @apply inline-flex items-center gap-1 rounded-full bg-surface-2 px-2 py-0.5 text-xs text-muted;
   }
+  /* the method the teacher intends: same chip, softly tinted with the accent */
+  .chip-intended {
+    @apply inline-flex items-center gap-1 rounded-full bg-accent/15 px-2 py-0.5 text-xs font-medium text-fg ring-1 ring-accent/45;
+  }
 }
 
 /* ───────── Rich text (statements & notes) ───────── */

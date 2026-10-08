@@ -9,6 +9,7 @@ import { dayKey, formatDay } from "@/lib/dates";
 import { DIFFICULTIES, SOURCE_TYPES, type QuestionListItem } from "@/lib/types";
 import { DifficultyPill, LeetCodeLogo, SourceBadge } from "@/components/ui";
 import { MultiSelect } from "@/components/multi-select";
+import { TopicChips } from "@/components/topic-chips";
 import { useApp } from "@/components/app-context";
 import { StatsRings } from "./stats";
 import { Heatmap, type ActivityDay } from "./heatmap";
@@ -66,7 +67,12 @@ export function Dashboard({
   }, [questions, solved]);
 
   const labels = useMemo(
-    () => [...new Set(questions.map((q) => q.source_label).filter(Boolean) as string[])].sort(),
+    () =>
+      [
+        ...new Set(
+          questions.flatMap((q) => [q.source_label, ...q.intents.map((i) => i.source_label)]).filter(Boolean) as string[],
+        ),
+      ].sort(),
     [questions],
   );
   const usedTopics = useMemo(() => {
@@ -314,12 +320,7 @@ function QuestionRow({ q, solved, onToggle }: { q: QuestionListItem; solved: boo
             <DifficultyPill d={q.difficulty} />
           </span>
           <SourceBadge type={q.source_type} label={q.source_label} date={q.source_date} />
-          {q.topics.map((t, i) => (
-            <span key={t} className={`chip ${i >= 2 ? "hidden sm:inline-flex" : ""}`}>
-              {t}
-            </span>
-          ))}
-          {q.topics.length > 2 && <span className="chip sm:hidden">+{q.topics.length - 2}</span>}
+          <TopicChips topics={q.topics} intents={q.intents} mobileLimit={2} />
         </div>
       </div>
 

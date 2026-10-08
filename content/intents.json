@@ -1,0 +1,290 @@
+{
+  "_readme": "Topic the teacher intends for each question, per email/class. Keys are LeetCode slugs or exact titles. Apply with: npx tsx scripts/sync-intents.ts (this file is the source of truth).",
+  "groups": [
+    {
+      "source_type": "email",
+      "source_label": "Preparatory Term: C++ and Data Structures",
+      "source_date": "2026-07-23",
+      "intended": {
+        "majority-element": [
+          "Array"
+        ],
+        "element-appearing-more-than-25-in-sorted-array": [
+          "Array"
+        ],
+        "duplicate-zeros": [
+          "Array"
+        ],
+        "binary-prefix-divisible-by-5": [
+          "Array"
+        ],
+        "degree-of-an-array": [
+          "Array"
+        ],
+        "can-place-flowers": [
+          "Array"
+        ],
+        "third-maximum-number": [
+          "Array"
+        ],
+        "lucky-numbers-in-a-matrix": [
+          "Array"
+        ],
+        "matrix-diagonal-sum": [
+          "Array"
+        ],
+        "reverse-linked-list": [
+          "Linked List"
+        ],
+        "linked-list-cycle-ii": [
+          "Linked List"
+        ],
+        "odd-even-linked-list": [
+          "Linked List"
+        ],
+        "split-linked-list-in-parts": [
+          "Linked List"
+        ],
+        "swapping-nodes-in-a-linked-list": [
+          "Linked List"
+        ],
+        "double-a-number-represented-as-a-linked-list": [
+          "Linked List"
+        ],
+        "contains-duplicate-ii": [
+          "Hash Table"
+        ],
+        "missing-number": [
+          "Hash Table"
+        ],
+        "first-unique-character-in-a-string": [
+          "Hash Table"
+        ],
+        "find-the-town-judge": [
+          "Hash Table"
+        ],
+        "jewels-and-stones": [
+          "Hash Table"
+        ],
+        "path-sum": [
+          "Binary Tree"
+        ],
+        "sum-of-left-leaves": [
+          "Binary Tree"
+        ],
+        "cousins-in-binary-tree": [
+          "Binary Tree"
+        ],
+        "maximum-binary-tree": [
+          "Binary Tree"
+        ]
+      }
+    },
+    {
+      "source_type": "email",
+      "source_label": null,
+      "source_date": "2026-08-12",
+      "intended": {
+        "median-of-two-sorted-arrays": [
+          "Binary Search"
+        ],
+        "reverse-pairs": [
+          "Binary Search"
+        ],
+        "find-first-and-last-position-of-element-in-sorted-array": [
+          "Binary Search"
+        ],
+        "single-element-in-a-sorted-array": [
+          "Binary Search"
+        ],
+        "search-a-2d-matrix": [
+          "Binary Search"
+        ],
+        "maximum-value-at-a-given-index-in-a-bounded-array": [
+          "Binary Search"
+        ],
+        "nth-magical-number": [
+          "Binary Search"
+        ],
+        "minimum-number-of-days-to-make-m-bouquets": [
+          "Binary Search"
+        ],
+        "minimum-time-to-activate-string": [
+          "Binary Search"
+        ],
+        "find-k-pairs-with-smallest-sums": [
+          "Heap (Priority Queue)"
+        ],
+        "global-and-local-inversions": [
+          "Math"
+        ],
+        "merge-intervals": [
+          "Sorting"
+        ]
+      }
+    },
+    {
+      "source_type": "email",
+      "source_label": null,
+      "source_date": "2026-08-24",
+      "intended": {
+        "removing-stars-from-a-string": [
+          "Stack"
+        ],
+        "validate-stack-sequences": [
+          "Stack"
+        ],
+        "remove-k-digits": [
+          "Stack"
+        ],
+        "next-greater-node-in-linked-list": [
+          "Stack"
+        ],
+        "online-stock-span": [
+          "Stack"
+        ],
+        "largest-rectangle-in-histogram": [
+          "Stack"
+        ],
+        "maximal-rectangle": [
+          "Stack"
+        ],
+        "next-greater-element-iv": [
+          "Stack"
+        ],
+        "maximum-and-minimum-sums-of-at-most-size-k-subarrays": [
+          "Stack"
+        ],
+        "count-non-decreasing-subarrays-after-k-operations": [
+          "Stack"
+        ],
+        "find-maximum-non-decreasing-array-length": [
+          "Stack"
+        ],
+        "number-of-visible-people-in-a-queue": [
+          "Stack"
+        ]
+      }
+    },
+    {
+      "source_type": "class_notes",
+      "source_label": null,
+      "source_date": "2026-09-03",
+      "intended": {
+        "Maximum Profit from a Single Stock Transaction with Day Gaps": [
+          "Monotonic Queue"
+        ],
+        "Maximum-Sum Subarray with Length Constraints": [
+          "Prefix Sum",
+          "Monotonic Queue"
+        ],
+        "Dense Substrings in a Binary String": [
+          "Prefix Sum",
+          "Monotonic Queue"
+        ]
+      }
+    },
+    {
+      "source_type": "email",
+      "source_label": null,
+      "source_date": "2026-09-06",
+      "intended": {
+        "find-k-pairs-with-smallest-sums": [
+          "Heap (Priority Queue)"
+        ],
+        "k-closest-points-to-origin": [
+          "Heap (Priority Queue)"
+        ],
+        "choose-k-elements-with-maximum-sum": [
+          "Heap (Priority Queue)"
+        ],
+        "ipo": [
+          "Heap (Priority Queue)"
+        ],
+        "find-the-k-sum-of-an-array": [
+          "Heap (Priority Queue)"
+        ],
+        "find-median-from-data-stream": [
+          "Heap (Priority Queue)"
+        ],
+        "sliding-window-median": [
+          "Heap (Priority Queue)"
+        ]
+      }
+    },
+    {
+      "source_type": "class_notes",
+      "source_label": "Heaps (to be discussed in class)",
+      "source_date": "2026-09-08",
+      "intended": {
+        "Maximum Profit with Unlimited Stock Holdings": [
+          "Heap (Priority Queue)"
+        ],
+        "Data Structure Supporting Median Deletion": [
+          "Heap (Priority Queue)"
+        ]
+      }
+    },
+    {
+      "source_type": "email",
+      "source_label": "Problems on ST and BST",
+      "source_date": "2026-09-21",
+      "intended": {
+        "count-of-range-sum": [
+          "Segment Tree"
+        ],
+        "longest-increasing-subsequence-ii": [
+          "Segment Tree"
+        ],
+        "find-building-where-alice-and-bob-can-meet": [
+          "Segment Tree"
+        ],
+        "fruits-into-baskets-iii": [
+          "Segment Tree"
+        ],
+        "maximum-sum-queries": [
+          "Segment Tree"
+        ],
+        "count-number-of-teams": [
+          "Binary Indexed Tree"
+        ],
+        "number-of-pairs-satisfying-inequality": [
+          "Binary Indexed Tree"
+        ],
+        "count-good-triplets-in-an-array": [
+          "Binary Indexed Tree"
+        ],
+        "reverse-pairs": [
+          "Binary Indexed Tree"
+        ],
+        "count-increasing-quadruplets": [
+          "Binary Indexed Tree"
+        ],
+        "path-sum": [
+          "Binary Tree"
+        ],
+        "balanced-binary-tree": [
+          "Binary Tree"
+        ],
+        "unique-binary-search-trees": [
+          "Binary Search Tree"
+        ],
+        "validate-binary-search-tree": [
+          "Binary Search Tree"
+        ],
+        "recover-binary-search-tree": [
+          "Binary Search Tree"
+        ],
+        "lowest-common-ancestor-of-a-binary-search-tree": [
+          "Binary Search Tree"
+        ],
+        "minimum-absolute-difference-in-bst": [
+          "Binary Search Tree"
+        ],
+        "binary-search-tree-to-greater-sum-tree": [
+          "Binary Search Tree"
+        ]
+      }
+    }
+  ]
+}

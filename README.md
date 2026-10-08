@@ -79,6 +79,7 @@ Re-running the same file updates the same question. The format is documented in
 | `npm run db:migrate` | applies new files in `supabase/migrations` |
 | `npx tsx scripts/seed-users.ts [--prune \| --reset]` | syncs accounts with `config/users.json` (`--reset` deletes every account and its progress/notes/sessions first; questions stay) |
 | `npx tsx scripts/import-question.ts <file>` | imports a Claude-written question (auto-fills from LeetCode when `leetcode_url` is set; refuses duplicates unless `--allow-duplicate`) |
+| `npx tsx scripts/sync-intents.ts` | applies [content/intents.json](content/intents.json): the topic the teacher intends per question per email (shown first, highlighted) |
 | `npx tsx scripts/find-question.ts <words or url>` | checks whether a question is already listed |
 | `npx tsx scripts/leetcode.ts <slug or url>` | prints a LeetCode problem's statement and tags (to confirm a match) |
 | `npm run check:rls` | end-to-end RLS test with throwaway users (cleans up after itself) |

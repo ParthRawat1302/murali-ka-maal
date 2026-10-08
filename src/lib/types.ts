@@ -24,6 +24,15 @@ export type QuestionListItem = {
   has_statement: boolean;
   topics: string[];
   notes_count: number;
+  intents: Intent[];
+};
+
+/** The topic the teacher intends for a question in one email / class / test. */
+export type Intent = {
+  topic: string;
+  source_type: SourceType;
+  source_label: string | null;
+  source_date: string;
 };
 
 export type Question = {
