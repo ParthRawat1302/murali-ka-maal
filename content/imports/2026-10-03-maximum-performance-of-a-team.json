@@ -1,0 +1,17 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Heap and Segment Tree",
+  "source_date": "2026-10-03",
+  "leetcode_url": "https://leetcode.com/problems/maximum-performance-of-a-team/",
+  "topics": [],
+  "assets": {
+    "prob-Speed.pdf": "assets/pdf/prob-Speed.pdf"
+  },
+  "notes": [
+    {
+      "title": "Original PDF",
+      "visibility": "public",
+      "html": "<p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-Speed.pdf\" data-name=\"prob-Speed.pdf\" data-size=\"199148\" data-mime=\"application/pdf\">prob-Speed.pdf</a></p><p><em>The PDF's Example 2 explanation lists two non-optimal teams first; the answer 68 is correct.</em></p>"
+    }
+  ]
+}

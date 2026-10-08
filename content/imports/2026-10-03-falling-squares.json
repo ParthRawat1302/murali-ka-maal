@@ -1,0 +1,18 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Heap and Segment Tree",
+  "source_date": "2026-10-03",
+  "leetcode_url": "https://leetcode.com/problems/falling-squares/",
+  "topics": [],
+  "assets": {
+    "prob-Drop.pdf": "assets/pdf/prob-Drop.pdf",
+    "2026-10-03-falling-squares-ex1.svg": "assets/2026-10-03-falling-squares-ex1.svg"
+  },
+  "notes": [
+    {
+      "title": "Original PDF",
+      "visibility": "public",
+      "html": "<p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-Drop.pdf\" data-name=\"prob-Drop.pdf\" data-size=\"132030\" data-mime=\"application/pdf\">prob-Drop.pdf</a></p>"
+    }
+  ]
+}

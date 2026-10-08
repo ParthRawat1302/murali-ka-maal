@@ -338,6 +338,31 @@
           "Binary Search Tree"
         ]
       }
+    },
+    {
+      "source_type": "domjudge",
+      "source_label": "Heap and Segment Tree",
+      "source_date": "2026-10-03",
+      "intended": {
+        "Minimum Threshold for K Inversion Pairs": [
+          "Binary Indexed Tree"
+        ],
+        "falling-squares": [
+          "Segment Tree"
+        ],
+        "Range Add, First Index at Least X, and Range Max": [
+          "Segment Tree"
+        ],
+        "Minimum Cost to Connect Ropes": [
+          "Heap (Priority Queue)"
+        ],
+        "maximum-performance-of-a-team": [
+          "Heap (Priority Queue)"
+        ],
+        "count-good-triplets-in-an-array": [
+          "Binary Indexed Tree"
+        ]
+      }
     }
   ]
 }
