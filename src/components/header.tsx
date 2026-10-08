@@ -7,6 +7,7 @@ import { BarChart3, ListChecks, LogOut, Plus, Trophy } from "lucide-react";
 import { logout } from "@/app/login/actions";
 import { takeSession, useApp } from "./app-context";
 import { ThemeToggle } from "./theme-toggle";
+import { startNavProgress } from "./nav-progress";
 
 export function Header() {
   const { profile } = useApp();
@@ -48,6 +49,7 @@ export function Header() {
             disabled={pending}
             onClick={() =>
               start(async () => {
+                startNavProgress();
                 const id = await takeSession();
                 await logout(id ?? undefined);
               })

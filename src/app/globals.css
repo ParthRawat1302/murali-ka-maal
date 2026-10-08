@@ -294,3 +294,53 @@ body {
 .hljs-type {
   color: #d4a72c;
 }
+
+/* ───────── motion: soft, never blocking ───────── */
+@keyframes shimmer {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pop-in {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@layer components {
+  /* placeholder blocks shown while a page streams in */
+  .skeleton {
+    @apply rounded-md;
+    background: linear-gradient(
+      90deg,
+      var(--surface-2) 0%,
+      color-mix(in srgb, var(--surface-2) 55%, var(--surface)) 50%,
+      var(--surface-2) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+  .page-enter {
+    animation: fade-up 260ms ease-out both;
+  }
+  .pop-in {
+    animation: pop-in 220ms ease-out both;
+  }
+}
+
+/* small press feedback on every button-like control */
+.btn, .btn-primary, .btn-ghost, .chip, button {
+  transition-property: color, background-color, border-color, opacity, transform, box-shadow, filter;
+  transition-duration: 150ms;
+}
+.btn:active:not(:disabled), .btn-primary:active:not(:disabled), .btn-ghost:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton, .page-enter, .pop-in { animation: none; }
+  .btn:active, .btn-primary:active, .btn-ghost:active { transform: none; }
+}

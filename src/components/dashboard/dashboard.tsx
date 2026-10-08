@@ -320,7 +320,7 @@ function QuestionRow({
             solved ? "border-easy bg-easy text-white" : "border-border hover:border-easy"
           }`}
         >
-          {solved && <Check size={14} strokeWidth={3} />}
+          {solved && <Check size={14} strokeWidth={3} className="pop-in" />}
         </span>
       </button>
 

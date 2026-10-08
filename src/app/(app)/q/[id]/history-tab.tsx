@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 import { useApp } from "@/components/app-context";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import { formatDateTime } from "@/lib/dates";
@@ -76,8 +75,13 @@ export function HistoryTab({ questionId, notes }: { questionId: string; notes: N
 
   if (!entries)
     return (
-      <div className="flex justify-center p-10 text-muted">
-        <Loader2 className="animate-spin" />
+      <div className="card divide-y divide-border">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="flex flex-col gap-2 px-4 py-3 sm:flex-row sm:gap-4">
+            <div className="skeleton h-3 w-28" />
+            <div className={`skeleton h-3 ${i % 2 ? "w-1/2" : "w-2/3"}`} />
+          </div>
+        ))}
       </div>
     );
   if (!entries.length) return <p className="card p-8 text-center text-sm text-muted">No history yet.</p>;

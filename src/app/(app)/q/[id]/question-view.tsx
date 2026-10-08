@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import type { JSONContent } from "@tiptap/react";
 import { ArrowLeft, Check, ChevronDown, Crosshair, FileText, History, Loader2, NotebookPen, Pencil, Trash2 } from "lucide-react";
 import { useApp } from "@/components/app-context";
+import { startNavProgress } from "@/components/nav-progress";
 import { DocEditor } from "@/components/editor/doc-editor";
 import { QuestionMetaForm, type QuestionMeta } from "@/components/question-meta-form";
 import { DifficultyPill, LeetCodeLogo, SourceBadge } from "@/components/ui";
@@ -144,6 +145,7 @@ export function QuestionView({
     if (!confirm(`Delete “${q.title}” for everyone? Its notes and everyone's progress on it will be removed.`)) return;
     const { error } = await supabaseBrowser().from("questions").delete().eq("id", q.id);
     if (error) return alert(error.message);
+    startNavProgress();
     router.push("/");
     router.refresh();
   }
@@ -181,7 +183,7 @@ export function QuestionView({
                 solved ? "border-easy bg-easy text-white" : "border-border hover:border-easy"
               }`}
             >
-              {solved && <Check size={16} strokeWidth={3} />}
+              {solved && <Check size={16} strokeWidth={3} className="pop-in" />}
             </button>
             <div className="min-w-0 flex-1">
               <h1 className="text-xl font-semibold sm:text-2xl">{q.title}</h1>
@@ -259,6 +261,7 @@ export function QuestionView({
         ))}
       </nav>
 
+      <div key={tab} className="page-enter">
       {tab === "statement" && (
         <section>
           {statement.doc || q.statement || editingStatement ? (
@@ -304,6 +307,7 @@ export function QuestionView({
 
       {tab === "notes" && <NotesTab questionId={q.id} notes={notes} setNotes={setNotes} />}
       {tab === "history" && <HistoryTab questionId={q.id} notes={notes} />}
+      </div>
     </div>
   );
 }

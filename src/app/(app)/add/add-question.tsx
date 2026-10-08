@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { JSONContent } from "@tiptap/react";
 import { Loader2 } from "lucide-react";
+import { startNavProgress } from "@/components/nav-progress";
 import { DocEditor } from "@/components/editor/doc-editor";
 import { QuestionMetaForm, type QuestionMeta } from "@/components/question-meta-form";
 import { supabaseBrowser } from "@/lib/supabase/client";
@@ -62,6 +63,7 @@ export function AddQuestion({ allTopics }: { allTopics: string[] }) {
           .insert({ question_id: data.id, title: "Notes", visibility: "public", content: note });
         if (nErr) throw nErr;
       }
+      startNavProgress();
       router.push(`/q/${data.id}`);
       router.refresh();
     } catch (err) {
