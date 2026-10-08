@@ -21,7 +21,7 @@ export function ActivityTracks({ tracks }: { tracks: TrackStat[] }) {
     <section className="space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2 px-1">
         <h2 className="font-semibold">Topic tracks</h2>
-        <span className="text-xs text-muted">time on a question counts toward each of its topics</span>
+        <span className="text-xs text-muted">by each question&apos;s highlighted (intended) topic</span>
       </div>
       <div className="grid items-start gap-3 md:grid-cols-2">
         {tracks.map((t) => {

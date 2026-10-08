@@ -84,8 +84,8 @@ export type SubtopicStat = { name: string; seconds: number; solved: number; tota
 export type TrackStat = SubtopicStat & { subtopics: SubtopicStat[] };
 
 /**
- * Time and progress per track and subtopic. Time on a question counts toward each of its topics
- * (and once toward each track it belongs to). Progress is solved / questions with that topic.
+ * Time and progress per track and subtopic. `topics` are the question's intended topics (see
+ * loadActivity); time counts toward each of them and once toward each track. Progress is solved / questions with that topic.
  */
 export function trackStats(rows: ActivityRow[], solved: Set<string>, questions: ActivityQuestion[]): TrackStat[] {
   const qSeconds = new Map<string, number>();

@@ -18,14 +18,21 @@ export async function loadActivity(userId: string) {
   const [act, prog, qs, seen] = await Promise.all([
     supabase.from("activity_log").select("day, question_id, seconds").eq("user_id", userId),
     supabase.from("progress").select("question_id, solved_at").eq("user_id", userId).eq("solved", true),
-    supabase.from("question_list").select("id, title, difficulty, topics"),
+    supabase.from("question_list").select("id, title, difficulty, topics, intents"),
     supabase.from("wrap_views").select("wrap_key").eq("user_id", userId),
   ]);
   const rows = (act.data ?? []) as ActivityRow[];
   const solves = ((prog.data ?? []) as { question_id: string; solved_at: string | null }[]).filter(
     (s): s is SolveRow => !!s.solved_at,
   );
-  const questions = (qs.data ?? []) as ActivityQuestion[];
+  // Tracks and wraps count a question under the topic(s) the teacher intended (the highlighted
+  // ones), not every tag LeetCode gives it; questions without an intended topic keep all their tags.
+  const questions = ((qs.data ?? []) as (ActivityQuestion & { intents: { topic: string }[] })[]).map(
+    ({ intents, ...q }) => {
+      const intended = [...new Set(intents.map((i) => i.topic))];
+      return { ...q, topics: intended.length ? intended : q.topics };
+    },
+  );
   const today = todayIST();
   const days = [...rows.map((r) => r.day), ...solves.map((s) => istDay(s.solved_at))].sort();
   const firstDay = days[0] ?? today;
