@@ -82,7 +82,7 @@
     },
     {
       "source_type": "email",
-      "source_label": "Algorithm Analysis Homework",
+      "source_label": "Problem Set 1",
       "source_date": "2026-08-12",
       "intended": {
         "median-of-two-sorted-arrays": [
@@ -191,24 +191,6 @@
         ],
         "K-Step Fibonacci Modulo M": [
           "Matrix Exponentiation"
-        ]
-      }
-    },
-    {
-      "source_type": "email",
-      "source_label": "Class Prep: Parts A, B, C",
-      "source_date": "2026-09-02",
-      "intended": {
-        "Maximum Profit from a Single Stock Transaction with Day Gaps": [
-          "Monotonic Queue"
-        ],
-        "Maximum-Sum Subarray with Length Constraints": [
-          "Prefix Sum",
-          "Monotonic Queue"
-        ],
-        "Dense Substrings in a Binary String": [
-          "Prefix Sum",
-          "Monotonic Queue"
         ]
       }
     },

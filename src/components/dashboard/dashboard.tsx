@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react";
-import { Check, FileText, NotebookPen, Search, SlidersHorizontal, X } from "lucide-react";
+import { Check, FileText, NotebookPen, Repeat, Search, SlidersHorizontal, X } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import { dayKey, formatDay } from "@/lib/dates";
 import { appearances, DIFFICULTIES, SOURCE_TYPES, type QuestionListItem } from "@/lib/types";
@@ -13,7 +13,7 @@ import { TopicChips } from "@/components/topic-chips";
 import { useApp } from "@/components/app-context";
 import { StatsRings } from "./stats";
 import { Heatmap, type ActivityDay } from "./heatmap";
-import { applyFilters, EMPTY, isFiltered, readFilters, writeFilters, type Filters } from "./filters";
+import { applyFilters, EMPTY, isFiltered, readFilters, toRows, writeFilters, type Filters } from "./filters";
 
 const DIFF_TEXT = { easy: "text-easy", medium: "text-medium", hard: "text-hard" } as const;
 
@@ -110,6 +110,7 @@ export function Dashboard({
   }
 
   const groupByDate = filters.sort === "date_desc" || filters.sort === "date_asc";
+  const rows = useMemo(() => toRows(visible, { ...filters, q: deferredSearch }), [visible, filters, deferredSearch]);
   const anyFilter = isFiltered({ ...filters, q: deferredSearch });
 
   return (
@@ -274,16 +275,14 @@ export function Dashboard({
             {questions.length ? "No questions match these filters." : "No questions yet. Add the first one!"}
           </p>
         )}
-        {visible.map((q, i) => {
-          const showHeader = groupByDate && (i === 0 || visible[i - 1].source_date !== q.source_date);
+        {rows.map(({ q, date, again }, i) => {
+          const showHeader = groupByDate && (i === 0 || rows[i - 1].date !== date);
           return (
-            <div key={q.id}>
+            <div key={`${q.id}-${date}`}>
               {showHeader && (
-                <div className="bg-surface-2/60 px-4 py-1.5 text-xs font-medium text-muted">
-                  {formatDay(q.source_date)}
-                </div>
+                <div className="bg-surface-2/60 px-4 py-1.5 text-xs font-medium text-muted">{formatDay(date)}</div>
               )}
-              <QuestionRow q={q} solved={solved.has(q.id)} onToggle={() => toggleSolved(q.id)} />
+              <QuestionRow q={q} again={again} solved={solved.has(q.id)} onToggle={() => toggleSolved(q.id)} />
             </div>
           );
         })}
@@ -292,7 +291,17 @@ export function Dashboard({
   );
 }
 
-function QuestionRow({ q, solved, onToggle }: { q: QuestionListItem; solved: boolean; onToggle: () => void }) {
+function QuestionRow({
+  q,
+  again,
+  solved,
+  onToggle,
+}: {
+  q: QuestionListItem;
+  again: boolean;
+  solved: boolean;
+  onToggle: () => void;
+}) {
   return (
     <div className="group flex items-center gap-3 px-3 py-3 transition hover:bg-surface-2/50 sm:px-4">
       <button
@@ -319,6 +328,11 @@ function QuestionRow({ q, solved, onToggle }: { q: QuestionListItem; solved: boo
           <span className="sm:hidden">
             <DifficultyPill d={q.difficulty} />
           </span>
+          {again && (
+            <span className="chip" title={`First given on ${formatDay(q.source_date)}`}>
+              <Repeat size={11} /> given again
+            </span>
+          )}
           {appearances(q).map((a, i) => (
             <span key={`${a.source_type}-${a.source_date}-${a.source_label}`} className={i > 0 ? "hidden sm:inline-flex" : "inline-flex"}>
               <SourceBadge type={a.source_type} label={a.source_label} date={a.source_date} />

@@ -3,5 +3,12 @@
   "source_type": "email",
   "source_label": "Problems on Stack",
   "source_date": "2026-08-24",
-  "topics": []
+  "topics": [],
+  "notes": [
+    {
+      "title": "DomJudge version",
+      "visibility": "public",
+      "html": "<p>Given again in the DomJudge <strong>Stacks and Queues</strong> set (14 Sep), with this input/output format:</p><p><strong>Input:</strong> line 1 has the string <code>num</code>; line 2 has <code>k</code>.<br><strong>Output:</strong> the smallest possible number as a string (no leading zeros; <code>0</code> if all digits are removed).</p><pre><code class=\"language-plaintext\">Input:\n1432219\n3\nOutput: 1219</code></pre><pre><code class=\"language-plaintext\">Input:\n10200\n1\nOutput: 200</code></pre><pre><code class=\"language-plaintext\">Input:\n10\n2\nOutput: 0</code></pre><p><strong>Constraints:</strong> <code>1 &lt;= |num| &lt;= 10<sup>5</sup></code>, <code>0 &lt;= k &lt;= |num|</code>.</p>"
+    }
+  ]
 }

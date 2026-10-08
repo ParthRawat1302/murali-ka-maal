@@ -16,15 +16,25 @@ STEP 0: GET THE METADATA
 ------------------------
 Every question needs:
   source_type   email | test | class_notes | domjudge | other
-  source_label  test name ("Midterm 1"), email subject, lecture name … (optional for class notes)
-  source_date   YYYY-MM-DD (the class/test/email date, NOT today, unless it is today)
+  source_label  the email subject / set name, ALWAYS set it so the label filter can find the set:
+                e.g. "Problem Set 1", "Problems on Stack", "Binary Heap", "Problems on ST and BST",
+                DomJudge "Practice Set 1", "Stacks and Queues", "Heap and Segment Tree".
+                (Use the label already in content/intents.json if the set exists.)
+  source_date   YYYY-MM-DD (the class/test/email/upload date, NOT today, unless it is today)
 Rules of thumb:
-  - LeetCode link with nothing else  -> source_type "email"
-  - photo of notes                   -> "class_notes" (date is essential)
+  - LeetCode link(s) from the teacher -> "email" (label = subject line)
+  - photo/text of class notes        -> "class_notes" (date is essential). If the user says a text is
+                                        class notes, record it ONLY as class notes, even if it also
+                                        reached them by email.
   - "test"/"quiz"/"exam" mentioned   -> "test" + test name as source_label
-  - DomJudge text                    -> "domjudge"
-If the date or test name is missing and you can't infer it, ASK once (one short question) before importing.
+  - DomJudge text or PDF             -> "domjudge" + the set name the user gives
+If the date or set name is missing and you can't infer it, ASK once (one short question) before importing.
 If the user says who it's for, pass --as <username> (see config/users.json); otherwise it goes to the admin.
+
+PDFs: when the user mentions PDFs, look for them yourself (usually ~/Downloads/prob-*.pdf) and read them;
+don't ask the user to paste the text. Attach each PDF to its question as a public note
+"Original PDF" (copy to content/imports/assets/pdf/ and link it with
+<a data-file-attachment href="asset:<file>.pdf" data-name="<file>.pdf" data-mime="application/pdf">).
 
 
 STEP 1: UNDERSTAND THE QUESTION
@@ -36,11 +46,23 @@ STEP 1: UNDERSTAND THE QUESTION
   numbers in examples or constraints.
 
 
-STEP 2: CHECK IT ISN'T ALREADY IN ALGOWEB
------------------------------------------
+STEP 2: CHECK WHETHER IT'S ALREADY IN ALGOWEB (ALWAYS, FOR EVERY QUESTION)
+-------------------------------------------------------------------------
   npx tsx scripts/find-question.ts <a few title words | leetcode url>
-If it's already there (same problem), tell the user and stop, unless they want it added again
-(e.g. it was given in a test too). Then use --allow-duplicate on import.
+Try both the LeetCode url (after Step 3) and title words, since a re-given question may have a
+different title (DomJudge rewrites LeetCode problems, e.g. "Connect Ropes" = Connect Sticks).
+The teacher often gives the SAME question again (another email, a DomJudge set, class notes),
+sometimes expecting a DIFFERENT method (e.g. Reverse Pairs: Binary Search on 12 Aug, BIT on 21 Sep).
+If it's already there (same problem):
+  - Do NOT import it again (no duplicate question).
+  - Add it to the new set's group in content/intents.json with the topic intended THIS time
+    (Step 5B). That adds the new source tag (Email / DomJudge / Class notes + label + date), a
+    second highlighted topic, and makes it show up under the new date and in that set's filters.
+  - If the new version has a different input/output format or extra examples (DomJudge), add them as
+    a public note "DomJudge version" (or "Original PDF") on the existing question's import file and
+    re-import that file.
+  - Tell the user it was already listed and what you added.
+Only import a second copy if the user explicitly asks (then --allow-duplicate).
 
 
 STEP 3: LOOK FOR THE SAME PROBLEM ON LEETCODE (ALWAYS DO THIS FIRST)
@@ -151,16 +173,20 @@ If the teacher gave a solution/approach, add it as a public note:
 STEP 5B: INTENDED METHOD (WHAT THE TEACHER WANTS IT SOLVED WITH)
 ----------------------------------------------------------------
 Many questions can be solved several ways; the teacher gives them to practise the topic being taught.
-For every question from an email / class / test, record that topic in content/intents.json under the
-group for that source (source_type, source_label, source_date), keyed by LeetCode slug or exact title:
-  - Use the email's topic (subject line, "This week: binary search", the ?envId=… in the LeetCode link,
-    e.g. envId=binary-indexed-tree -> "Binary Indexed Tree").
-  - If the question has that topic, use it. If not, pick the closest topic the question DOES have.
-  - Usually ONE topic; at most two when the email explicitly names both. Don't highlight much.
-  - If the question is already listed (Step 2), don't import it again: just add it to the new
-    email's group in content/intents.json, possibly with a different intended topic.
+For EVERY question (new or already listed) record that topic in content/intents.json under the group
+for this source (source_type, source_label, source_date), keyed by LeetCode slug or exact title:
+  - Use the set's topic: subject line ("Problems on Stack", "Binary Heap"), the DomJudge set name
+    ("Heap and Segment Tree": decide per question which of the two it is), or the ?envId=… in the
+    LeetCode link (envId=binary-indexed-tree -> "Binary Indexed Tree").
+  - If no topic is given, pick the MOST probable intended technique from how it's best solved
+    (e.g. Quickselect, Monotonic Queue, Matrix Exponentiation) and add related topics normally.
+  - If the question has that topic, use it. If not, pick the closest topic it DOES have (the sync
+    script adds the topic to the question if it's missing).
+  - Usually ONE topic; at most two when the set explicitly names both. Don't highlight much.
 Then run:  npx tsx scripts/sync-intents.ts
-These topics are shown first and softly highlighted in the question's topic chips.
+Effect: intended topics are shown first and softly highlighted; a question given again shows one
+badge per source, appears under each date it was given (marked "given again"), and matches the
+Source / label / date filters for every set it was in.
 
 
 STEP 6: WRITE THE FILE AND IMPORT

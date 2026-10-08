@@ -69,6 +69,31 @@ export function isFiltered(f: Filters) {
 
 const DIFF_ORDER: Record<Difficulty, number> = { easy: 0, medium: 1, hard: 2 };
 
+type Appearance = ReturnType<typeof appearances>[number];
+
+function appearanceMatches(a: Appearance, f: Filters) {
+  return (
+    (!f.src.length || f.src.includes(a.source_type)) &&
+    (!f.label || (a.source_label ?? "") === f.label) &&
+    (!f.from || a.source_date >= f.from) &&
+    (!f.to || a.source_date <= f.to)
+  );
+}
+
+/** A list row: in the date views a question given again appears once per date it was given. */
+export type Row = { q: QuestionListItem; date: string; again: boolean };
+
+export function toRows(items: QuestionListItem[], f: Filters): Row[] {
+  if (f.sort !== "date_desc" && f.sort !== "date_asc") return items.map((q) => ({ q, date: q.source_date, again: false }));
+  const rows: Row[] = [];
+  for (const q of items) {
+    const dates = new Set(appearances(q).filter((a) => appearanceMatches(a, f)).map((a) => a.source_date));
+    for (const date of dates) rows.push({ q, date, again: date !== q.source_date });
+  }
+  const dir = f.sort === "date_asc" ? 1 : -1;
+  return rows.sort((a, b) => dir * (a.date.localeCompare(b.date) || a.q.created_at.localeCompare(b.q.created_at)));
+}
+
 export function applyFilters(items: QuestionListItem[], f: Filters, solved: Set<string>) {
   const q = f.q.trim().toLowerCase();
   const topics = f.topics.map((t) => t.toLowerCase());
@@ -81,16 +106,7 @@ export function applyFilters(items: QuestionListItem[], f: Filters, solved: Set<
     }
     // a question given again later (another email, DomJudge set, class) matches that source too;
     // source, label and date must all hold for the same appearance
-    if (f.src.length || f.label || f.from || f.to) {
-      const ok = appearances(it).some(
-        (a) =>
-          (!f.src.length || f.src.includes(a.source_type)) &&
-          (!f.label || (a.source_label ?? "") === f.label) &&
-          (!f.from || a.source_date >= f.from) &&
-          (!f.to || a.source_date <= f.to),
-      );
-      if (!ok) return false;
-    }
+    if (!appearances(it).some((a) => appearanceMatches(a, f))) return false;
     if (f.status === "solved" && !solved.has(it.id)) return false;
     if (f.status === "unsolved" && solved.has(it.id)) return false;
     return true;
