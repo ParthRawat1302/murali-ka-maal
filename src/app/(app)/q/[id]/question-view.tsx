@@ -13,7 +13,7 @@ import { intentSource, TopicChips } from "@/components/topic-chips";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import { metaToRow, setTopics } from "@/lib/questions";
 import { timeAgo } from "@/lib/dates";
-import type { Intent, Note, Question } from "@/lib/types";
+import { appearances, type Intent, type Note, type Question } from "@/lib/types";
 import { NotesTab, type NoteState } from "./notes-tab";
 import { HistoryTab } from "./history-tab";
 
@@ -187,7 +187,9 @@ export function QuestionView({
               <h1 className="text-xl font-semibold sm:text-2xl">{q.title}</h1>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <DifficultyPill d={q.difficulty} />
-                <SourceBadge type={q.source_type} label={q.source_label} date={q.source_date} />
+                {appearances({ ...q, intents }).map((a) => (
+                  <SourceBadge key={`${a.source_type}-${a.source_date}-${a.source_label}`} type={a.source_type} label={a.source_label} date={a.source_date} />
+                ))}
                 <TopicChips topics={topics} intents={intents} link />
               </div>
               <button

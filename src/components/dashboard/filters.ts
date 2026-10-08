@@ -1,3 +1,4 @@
+import { appearances } from "@/lib/types";
 import type { Difficulty, QuestionListItem, SourceType } from "@/lib/types";
 
 export type Sort = "date_desc" | "date_asc" | "difficulty" | "title";
@@ -78,11 +79,18 @@ export function applyFilters(items: QuestionListItem[], f: Filters, solved: Set<
       const has = new Set(it.topics.map((t) => t.toLowerCase()));
       if (f.topicMode === "all" ? !topics.every((t) => has.has(t)) : !topics.some((t) => has.has(t))) return false;
     }
-    if (f.src.length && !f.src.includes(it.source_type)) return false;
-    // a question given again in a later email also counts for that email's label
-    if (f.label && (it.source_label ?? "") !== f.label && !it.intents.some((i) => i.source_label === f.label)) return false;
-    if (f.from && it.source_date < f.from) return false;
-    if (f.to && it.source_date > f.to) return false;
+    // a question given again later (another email, DomJudge set, class) matches that source too;
+    // source, label and date must all hold for the same appearance
+    if (f.src.length || f.label || f.from || f.to) {
+      const ok = appearances(it).some(
+        (a) =>
+          (!f.src.length || f.src.includes(a.source_type)) &&
+          (!f.label || (a.source_label ?? "") === f.label) &&
+          (!f.from || a.source_date >= f.from) &&
+          (!f.to || a.source_date <= f.to),
+      );
+      if (!ok) return false;
+    }
     if (f.status === "solved" && !solved.has(it.id)) return false;
     if (f.status === "unsolved" && solved.has(it.id)) return false;
     return true;

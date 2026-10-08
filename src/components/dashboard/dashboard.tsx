@@ -6,7 +6,7 @@ import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "rea
 import { Check, FileText, NotebookPen, Search, SlidersHorizontal, X } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import { dayKey, formatDay } from "@/lib/dates";
-import { DIFFICULTIES, SOURCE_TYPES, type QuestionListItem } from "@/lib/types";
+import { appearances, DIFFICULTIES, SOURCE_TYPES, type QuestionListItem } from "@/lib/types";
 import { DifficultyPill, LeetCodeLogo, SourceBadge } from "@/components/ui";
 import { MultiSelect } from "@/components/multi-select";
 import { TopicChips } from "@/components/topic-chips";
@@ -319,7 +319,11 @@ function QuestionRow({ q, solved, onToggle }: { q: QuestionListItem; solved: boo
           <span className="sm:hidden">
             <DifficultyPill d={q.difficulty} />
           </span>
-          <SourceBadge type={q.source_type} label={q.source_label} date={q.source_date} />
+          {appearances(q).map((a, i) => (
+            <span key={`${a.source_type}-${a.source_date}-${a.source_label}`} className={i > 0 ? "hidden sm:inline-flex" : "inline-flex"}>
+              <SourceBadge type={a.source_type} label={a.source_label} date={a.source_date} />
+            </span>
+          ))}
           <TopicChips topics={q.topics} intents={q.intents} mobileLimit={2} />
         </div>
       </div>

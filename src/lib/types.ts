@@ -27,6 +27,16 @@ export type QuestionListItem = {
   intents: Intent[];
 };
 
+/** Every email / class / test / DomJudge set a question was given in (first one first). */
+export function appearances(q: Pick<QuestionListItem, "source_type" | "source_label" | "source_date" | "intents">) {
+  const all = [{ source_type: q.source_type, source_label: q.source_label, source_date: q.source_date }];
+  for (const i of q.intents) {
+    if (!all.some((a) => a.source_type === i.source_type && a.source_date === i.source_date && a.source_label === i.source_label))
+      all.push({ source_type: i.source_type, source_label: i.source_label, source_date: i.source_date });
+  }
+  return all;
+}
+
 /** The topic the teacher intends for a question in one email / class / test. */
 export type Intent = {
   topic: string;

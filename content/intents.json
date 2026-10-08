@@ -82,7 +82,7 @@
     },
     {
       "source_type": "email",
-      "source_label": null,
+      "source_label": "Algorithm Analysis Homework",
       "source_date": "2026-08-12",
       "intended": {
         "median-of-two-sorted-arrays": [
@@ -125,7 +125,7 @@
     },
     {
       "source_type": "email",
-      "source_label": null,
+      "source_label": "Problems on Stack",
       "source_date": "2026-08-24",
       "intended": {
         "removing-stars-from-a-string": [
@@ -195,6 +195,24 @@
       }
     },
     {
+      "source_type": "email",
+      "source_label": "Class Prep: Parts A, B, C",
+      "source_date": "2026-09-02",
+      "intended": {
+        "Maximum Profit from a Single Stock Transaction with Day Gaps": [
+          "Monotonic Queue"
+        ],
+        "Maximum-Sum Subarray with Length Constraints": [
+          "Prefix Sum",
+          "Monotonic Queue"
+        ],
+        "Dense Substrings in a Binary String": [
+          "Prefix Sum",
+          "Monotonic Queue"
+        ]
+      }
+    },
+    {
       "source_type": "class_notes",
       "source_label": null,
       "source_date": "2026-09-03",
@@ -214,7 +232,7 @@
     },
     {
       "source_type": "email",
-      "source_label": null,
+      "source_label": "Binary Heap",
       "source_date": "2026-09-06",
       "intended": {
         "find-k-pairs-with-smallest-sums": [
@@ -236,6 +254,12 @@
           "Heap (Priority Queue)"
         ],
         "sliding-window-median": [
+          "Heap (Priority Queue)"
+        ],
+        "Maximum Profit with Unlimited Stock Holdings": [
+          "Heap (Priority Queue)"
+        ],
+        "Data Structure Supporting Median Deletion": [
           "Heap (Priority Queue)"
         ]
       }
