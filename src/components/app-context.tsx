@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { createContext, use, useEffect, useRef, type ReactNode } from "react";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import type { Profile } from "@/lib/types";
@@ -19,6 +20,9 @@ export function useApp() {
 
 const SESSION_KEY = "algoweb.session";
 const HEARTBEAT_MS = 60_000;
+// Active-time tracking: counts only while the tab is visible and someone touched it recently.
+const ACTIVITY_TICK_MS = 30_000;
+const IDLE_AFTER_MS = 5 * 60_000;
 
 // Shared across effect re-runs (React dev mode mounts twice) so one page load is one session.
 let starting: { user: string; promise: Promise<string | null> } | null = null;
@@ -113,6 +117,42 @@ export function AppProvider({
       document.removeEventListener("visibilitychange", onVisible);
     };
   }, [profile.id]);
+
+  // Active time per day (and per question on /q/<id>) for the Activity page and wraps.
+  const pathname = usePathname();
+  const questionRef = useRef<string | null>(null);
+  useEffect(() => {
+    questionRef.current = /^\/q\/([0-9a-f-]{36})/i.exec(pathname)?.[1] ?? null;
+  }, [pathname]);
+
+  useEffect(() => {
+    const supabase = supabaseBrowser();
+    let lastInput = Date.now();
+    let lastTick = Date.now();
+    const touch = () => (lastInput = Date.now());
+    const events = ["pointerdown", "pointermove", "keydown", "scroll", "wheel", "touchstart"] as const;
+    events.forEach((e) => window.addEventListener(e, touch, { passive: true }));
+
+    function tick() {
+      const now = Date.now();
+      const elapsed = Math.min(now - lastTick, 2 * ACTIVITY_TICK_MS);
+      lastTick = now;
+      if (document.visibilityState !== "visible" || now - lastInput > IDLE_AFTER_MS) return;
+      const seconds = Math.round(elapsed / 1000);
+      if (seconds > 0) supabase.rpc("log_activity", { p_seconds: seconds, p_question: questionRef.current }).then();
+    }
+    const timer = setInterval(tick, ACTIVITY_TICK_MS);
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") lastTick = Date.now(); // don't count hidden time
+      else tick();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibility);
+      events.forEach((e) => window.removeEventListener(e, touch));
+    };
+  }, []);
 
   const peopleMap = Object.fromEntries(people.map((p) => [p.id, p.display_name]));
   return <Ctx value={{ profile, people: peopleMap }}>{children}</Ctx>;

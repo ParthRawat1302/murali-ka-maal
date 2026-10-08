@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTransition } from "react";
-import { BarChart3, ListChecks, LogOut, Plus, Trophy } from "lucide-react";
+import { Activity, BarChart3, ListChecks, LogOut, Plus, Trophy } from "lucide-react";
 import { logout } from "@/app/login/actions";
 import { takeSession, useApp } from "./app-context";
 import { ThemeToggle } from "./theme-toggle";
@@ -17,6 +17,7 @@ export function Header() {
   const links = [
     { href: "/", label: "Questions", icon: ListChecks },
     { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
+    { href: "/activity", label: "Activity", icon: Activity },
     { href: "/add", label: "Add", icon: Plus },
     ...(profile.is_admin ? [{ href: "/analytics", label: "Analytics", icon: BarChart3 }] : []),
   ];

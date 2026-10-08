@@ -49,6 +49,15 @@ Behind the scenes each name is a real Supabase Auth user (`<name>@algoweb.local`
 from `AUTH_PEPPER`, so row-level security works per person. In Supabase → Authentication → Sign In / Providers,
 turn **off** "Allow new users to sign up"; even without that, accounts not created by the seed script see no data.
 
+## Activity and wraps
+
+**Activity** (header) shows your active time per day as a calendar (hover a day for its hours), totals and
+streaks, and topic tracks (e.g. Trees → Binary Search Tree) with time spent and solved x/y. Time is logged
+by a 30-second heartbeat only while the tab is visible and used in the last 5 minutes (`activity_log`,
+via the `log_activity` function; each member sees only their own). Every Sunday a **weekly wrap** (the
+previous Sunday–Saturday) and on the 1st a **monthly wrap** appear as a slim banner on the home page;
+opening or closing it hides it for good (`wrap_views`). All wraps can be replayed from the Activity page.
+
 ## Permissions (enforced by RLS in [supabase/migrations](supabase/migrations))
 
 - Questions, topics, links, statements: any signed-in member can add, edit, or delete. Every change goes to `audit_log` (the **History** tab).
