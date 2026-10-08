@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { JSONContent } from "@tiptap/react";
-import { ArrowLeft, Check, Crosshair, FileText, History, Loader2, NotebookPen, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, Crosshair, FileText, History, Loader2, NotebookPen, Pencil, Trash2 } from "lucide-react";
 import { useApp } from "@/components/app-context";
 import { DocEditor } from "@/components/editor/doc-editor";
 import { QuestionMetaForm, type QuestionMeta } from "@/components/question-meta-form";
@@ -42,6 +42,7 @@ export function QuestionView({
   const router = useRouter();
   const [q, setQ] = useState(initialQuestion);
   const [topics, setTopicsState] = useState(initialTopics);
+  const [showDetails, setShowDetails] = useState(false);
   // Statement content as last received from someone else; our own saves don't round-trip.
   const [statement, setStatement] = useState({ doc: initialQuestion.statement, version: initialQuestion.updated_at });
   const serverStatement = useRef(initialQuestion.statement);
@@ -189,23 +190,35 @@ export function QuestionView({
                 <SourceBadge type={q.source_type} label={q.source_label} date={q.source_date} />
                 <TopicChips topics={topics} intents={intents} link />
               </div>
-              {intents.length > 0 && (
-                <p className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted">
-                  <Crosshair size={13} className="text-accent" />
-                  <span>Intended method:</span>
-                  {intents.map((i, n) => (
-                    <span key={`${i.topic}-${i.source_date}`}>
-                      <b className="font-medium text-fg">{i.topic}</b> ({intentSource(i)})
-                      {n < intents.length - 1 ? "," : ""}
-                    </span>
-                  ))}
-                </p>
+              <button
+                className="mt-2 flex items-center gap-1 text-xs text-muted hover:text-fg"
+                onClick={() => setShowDetails((d) => !d)}
+                aria-expanded={showDetails}
+              >
+                <ChevronDown size={14} className={`transition ${showDetails ? "rotate-180" : ""}`} />
+                {showDetails ? "Hide details" : "See details"}
+              </button>
+              {showDetails && (
+                <div className="mt-1.5 space-y-1 text-xs text-muted">
+                  {intents.length > 0 && (
+                    <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                      <Crosshair size={13} className="text-accent" />
+                      <span>Intended method:</span>
+                      {intents.map((i, n) => (
+                        <span key={`${i.topic}-${i.source_date}`}>
+                          <b className="font-medium text-fg">{i.topic}</b> ({intentSource(i)})
+                          {n < intents.length - 1 ? "," : ""}
+                        </span>
+                      ))}
+                    </p>
+                  )}
+                  <p>
+                    Added {q.created_by && people[q.created_by] ? `by ${people[q.created_by]} ` : ""}
+                    {timeAgo(q.created_at)}
+                    {lastEditor ? ` · last edited by ${lastEditor} ${timeAgo(q.updated_at)}` : ""}
+                  </p>
+                </div>
               )}
-              <p className="mt-2 text-xs text-muted">
-                Added {q.created_by && people[q.created_by] ? `by ${people[q.created_by]} ` : ""}
-                {timeAgo(q.created_at)}
-                {lastEditor ? ` · last edited by ${lastEditor} ${timeAgo(q.updated_at)}` : ""}
-              </p>
             </div>
             <div className="flex w-full shrink-0 items-center justify-end gap-1 border-t border-border pt-2 sm:w-auto sm:border-0 sm:pt-0">
               {q.leetcode_url && (

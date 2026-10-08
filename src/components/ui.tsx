@@ -36,15 +36,17 @@ export function SourceBadge({
   label: string | null;
   date: string;
 }) {
-  const text =
-    type === "class_notes"
-      ? `Class notes · ${formatDay(date, true)}`
-      : label
-        ? `${sourceTypeLabel(type)}: ${label}`
-        : sourceTypeLabel(type);
+  // "Email" / "Class notes" in slightly larger bold text, then the label or date
+  const kind = sourceTypeLabel(type);
+  const detail = type === "class_notes" ? formatDay(date, true) : label;
+  const text = detail ? `${kind}: ${detail}` : kind;
   return (
-    <span className="inline-flex max-w-[16rem] items-center truncate rounded-md border border-border px-1.5 py-0.5 text-xs text-muted" title={text}>
-      {text}
+    <span
+      className="inline-flex min-w-0 max-w-[18rem] items-baseline rounded-md border border-border px-1.5 py-0.5 text-xs text-muted"
+      title={text}
+    >
+      <b className="shrink-0 text-[13px] font-semibold text-fg">{kind}</b>
+      {detail && <span className="truncate">:&nbsp;{detail}</span>}
     </span>
   );
 }
