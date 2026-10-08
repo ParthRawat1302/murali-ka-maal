@@ -14,11 +14,5 @@
   "assets": {
     "prob-FIB.pdf": "assets/pdf/prob-FIB.pdf"
   },
-  "notes": [
-    {
-      "title": "Original PDF",
-      "visibility": "public",
-      "html": "<p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-FIB.pdf\" data-name=\"prob-FIB.pdf\" data-size=\"102686\" data-mime=\"application/pdf\">prob-FIB.pdf</a></p>"
-    }
-  ]
+  "statement_append": "<h3>Original PDF</h3><p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-FIB.pdf\" data-name=\"prob-FIB.pdf\" data-size=\"102686\" data-mime=\"application/pdf\">prob-FIB.pdf</a></p>"
 }

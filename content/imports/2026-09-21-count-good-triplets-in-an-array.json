@@ -7,16 +7,5 @@
   "assets": {
     "prob-Triplet.pdf": "assets/pdf/prob-Triplet.pdf"
   },
-  "notes": [
-    {
-      "title": "Original PDF",
-      "visibility": "public",
-      "html": "<p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-Triplet.pdf\" data-name=\"prob-Triplet.pdf\" data-size=\"180323\" data-mime=\"application/pdf\">prob-Triplet.pdf</a></p><blockquote><p><strong>The PDF's example outputs are wrong:</strong> Example 1 (<code>nums1 = [2,0,1,3,4]</code>, <code>nums2 = [0,1,2,3,4]</code>) has <strong>5</strong> good triplets, not 4: it misses (0, 1, 3). Example 2 says n = 4 but lists 5 numbers; with <code>[4,0,1,3,2]</code> and <code>[4,1,0,2,3]</code> the answer is <strong>4</strong> (as on LeetCode), not 0.</p></blockquote>"
-    },
-    {
-      "title": "Teacher's solution",
-      "visibility": "public",
-      "html": "<p>Relabel each value by its position in <code>nums1</code>, so <code>nums2</code> becomes <code>P[i] = pos1[nums2[i]]</code>. A good triplet is then <code>i &lt; j &lt; k</code> with <code>P[i] &lt; P[j] &lt; P[k]</code>.</p><p>For each middle index <code>j</code>: <code>leftLess[j] = #{i &lt; j : P[i] &lt; P[j]}</code> and <code>rightGreater[j] = #{k &gt; j : P[k] &gt; P[j]}</code>. The answer is the sum over <code>j</code> of <code>leftLess[j] × rightGreater[j]</code>.</p><p>Both counts come from a Fenwick tree (BIT) over values.</p><p><strong>Time:</strong> O(n log n) · <strong>Space:</strong> O(n)</p>"
-    }
-  ]
+  "statement_append": "<h3>Original PDF</h3><p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-Triplet.pdf\" data-name=\"prob-Triplet.pdf\" data-size=\"180323\" data-mime=\"application/pdf\">prob-Triplet.pdf</a></p><blockquote><p><strong>The PDF's example outputs are wrong:</strong> Example 1 (<code>nums1 = [2,0,1,3,4]</code>, <code>nums2 = [0,1,2,3,4]</code>) has <strong>5</strong> good triplets, not 4: it misses (0, 1, 3). Example 2 says n = 4 but lists 5 numbers; with <code>[4,0,1,3,2]</code> and <code>[4,1,0,2,3]</code> the answer is <strong>4</strong> (as on LeetCode), not 0.</p></blockquote><h3>Required approach</h3><p>Relabel each value by its position in <code>nums1</code>, so <code>nums2</code> becomes <code>P[i] = pos1[nums2[i]]</code>. A good triplet is then <code>i &lt; j &lt; k</code> with <code>P[i] &lt; P[j] &lt; P[k]</code>.</p><p>For each middle index <code>j</code>: <code>leftLess[j] = #{i &lt; j : P[i] &lt; P[j]}</code> and <code>rightGreater[j] = #{k &gt; j : P[k] &gt; P[j]}</code>. The answer is the sum over <code>j</code> of <code>leftLess[j] × rightGreater[j]</code>.</p><p>Both counts come from a Fenwick tree (BIT) over values.</p><p><strong>Time:</strong> O(n log n) · <strong>Space:</strong> O(n)</p>"
 }

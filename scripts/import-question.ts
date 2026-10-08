@@ -12,8 +12,11 @@
 //   "source_date": "2026-10-08",
 //   "leetcode_url": null,                   // optional
 //   "statement_html": "<p>…<img src=\"asset:tree.svg\"></p>",   // or "statement_file": "x.html"
+//   "statement_append": "<h3>DomJudge version</h3>…",           // added below the statement (also below
+//                                                              // one fetched from LeetCode): original PDF,
+//                                                              // DomJudge format, required approach…
 //   "assets": { "tree.svg": "assets/tree.svg" },               // uploaded; "asset:<name>" → public URL
-//   "notes": [{ "title": "Teacher's solution", "html": "…", "visibility": "public" }]
+//   "notes": [ … ]                                             // only if the user asks: notes are theirs
 // }
 // With a leetcode_url, any missing title / difficulty / statement is fetched from LeetCode and its
 // topic tags are merged into "topics".
@@ -35,6 +38,7 @@ type ImportFile = {
   leetcode_url?: string | null;
   statement_html?: string;
   statement_file?: string;
+  statement_append?: string;
   assets?: Record<string, string>;
   notes?: ImportNote[];
 };
@@ -114,9 +118,9 @@ async function main() {
     });
   const toDoc = (html: string) => generateJSON(withAssets(html), baseExtensions());
 
-  const statementHtml = spec.statement_file
-    ? readFileSync(resolve(base, spec.statement_file), "utf8")
-    : spec.statement_html;
+  const statementHtml =
+    (spec.statement_file ? readFileSync(resolve(base, spec.statement_file), "utf8") : (spec.statement_html ?? "")) +
+      (spec.statement_append ? `<hr>${spec.statement_append}` : "") || undefined;
   const row = {
     title: title.trim(),
     difficulty: spec.difficulty,

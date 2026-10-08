@@ -14,7 +14,7 @@ Paths inside the file are relative to it. Name files `YYYY-MM-DD-short-slug.json
   "leetcode_url": null,
   "statement_html": "<p>Given the <code>root</code> …</p><img src=\"asset:tree-1.svg\" alt=\"Example tree\"><pre><code class=\"language-plaintext\">Input: root = [3,9,20,null,null,15,7]\nOutput: [[9],[3,15],[20],[7]]</code></pre>",
   "assets": { "tree-1.svg": "assets/2026-10-08-tree-1.svg" },
-  "notes": [{ "title": "Teacher's solution", "visibility": "public", "html": "<pre><code class=\"language-cpp\">…</code></pre>" }]
+  "statement_append": "<h3>Original PDF</h3><p><a data-file-attachment href=\"asset:prob-X.pdf\" data-name=\"prob-X.pdf\">prob-X.pdf</a></p>"
 }
 ```
 
@@ -27,7 +27,9 @@ statement are fetched automatically, and any `topics` you list are added on top:
 
 - `difficulty`: `easy` | `medium` | `hard`
 - `source_type`: `email` | `test` | `class_notes` | `domjudge` | `other`. Use `source_label` for the test name or email subject.
-- `statement_file` / note `file` can point to an `.html` file instead of inline HTML.
+- `statement_file` can point to an `.html` file instead of inline HTML.
+- `statement_append` is shown below the statement after a divider, also below one fetched from LeetCode
+  (original PDF, DomJudge input/output format, required approach). Don't add `notes`: notes are the students'.
 - `asset:<name>` anywhere in the HTML becomes the uploaded file's public URL.
 
 ## Writing statements (LeetCode style)

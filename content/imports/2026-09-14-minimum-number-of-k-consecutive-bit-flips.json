@@ -4,11 +4,5 @@
   "source_date": "2026-09-14",
   "leetcode_url": "https://leetcode.com/problems/minimum-number-of-k-consecutive-bit-flips/",
   "topics": [],
-  "notes": [
-    {
-      "title": "DomJudge version",
-      "visibility": "public",
-      "html": "<p>Same problem as LeetCode, judged with this input/output format:</p><p><strong>Input:</strong> line 1 has <code>n</code> and <code>k</code>; line 2 has <code>n</code> bits (0 or 1).<br><strong>Output:</strong> the minimum number of flips, or <code>-1</code> if impossible.</p><pre><code class=\"language-plaintext\">Input:\n5 3\n0 0 0 1 1\nOutput: 1</code></pre><pre><code class=\"language-plaintext\">Input:\n3 1\n0 1 0\nOutput: 2</code></pre><pre><code class=\"language-plaintext\">Input:\n4 2\n0 1 0 1\nOutput: 2</code></pre><pre><code class=\"language-plaintext\">Input:\n5 3\n0 0 1 0 0\nOutput: 2</code></pre><pre><code class=\"language-plaintext\">Input:\n4 3\n0 0 0 0\nOutput: -1</code></pre><p><strong>Constraints:</strong> <code>1 &lt;= n &lt;= 10<sup>5</sup></code>, <code>1 &lt;= k &lt;= n</code>.</p>"
-    }
-  ]
+  "statement_append": "<h3>DomJudge version</h3><p>Same problem as LeetCode, judged with this input/output format:</p><p><strong>Input:</strong> line 1 has <code>n</code> and <code>k</code>; line 2 has <code>n</code> bits (0 or 1).<br><strong>Output:</strong> the minimum number of flips, or <code>-1</code> if impossible.</p><pre><code class=\"language-plaintext\">Input:\n5 3\n0 0 0 1 1\nOutput: 1</code></pre><pre><code class=\"language-plaintext\">Input:\n3 1\n0 1 0\nOutput: 2</code></pre><pre><code class=\"language-plaintext\">Input:\n4 2\n0 1 0 1\nOutput: 2</code></pre><pre><code class=\"language-plaintext\">Input:\n5 3\n0 0 1 0 0\nOutput: 2</code></pre><pre><code class=\"language-plaintext\">Input:\n4 3\n0 0 0 0\nOutput: -1</code></pre><p><strong>Constraints:</strong> <code>1 &lt;= n &lt;= 10<sup>5</sup></code>, <code>1 &lt;= k &lt;= n</code>.</p>"
 }

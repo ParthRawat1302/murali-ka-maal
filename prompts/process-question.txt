@@ -19,7 +19,8 @@ THE WORKFLOW AT A GLANCE (for every question)
   2. Already in AlgoWeb?  YES -> don't re-add; tag it with this set + this set's intended topic.
   3. Exact problem on LeetCode?  YES -> import by link.  NO -> write it up (statement, examples,
      constraints, SVG diagrams), verify every example by brute force.
-  4. Notes: teacher's solution, original PDF, DomJudge version.
+  4. Extra sections in the statement: original PDF, DomJudge version, required approach.
+     (Never add notes: notes belong to the students.)
   5. Intended topic for THIS set -> content/intents.json -> npx tsx scripts/sync-intents.ts
   6. Import, commit + push the content files, report back.
 
@@ -89,8 +90,8 @@ If it's ALREADY THERE (same problem):
     highlighted topic if the method differs, a row under this set's date marked "given again", and it
     matches this set in the Source / label / date filters and in Activity tracks.
   - If this version differs (other input/output format, extra examples, a PDF), add it to the EXISTING
-    question's import file as a public note ("DomJudge version" with the format + all examples, and/or
-    "Original PDF", see Step 4) and re-import that file.
+    question's import file as an extra statement section in "statement_append" ("DomJudge version"
+    with the format + all examples, and/or "Original PDF", see Step 4) and re-import that file.
   - Report: "already listed (first given <date/set>) -> tagged with <this set>, intended <topic>".
   - Never create a second badge for the same set: one set = one (source_type, label, date).
 Only import a second copy if the user explicitly asks (then --allow-duplicate).
@@ -104,7 +105,7 @@ STEP 3: LOOK FOR THE SAME PROBLEM ON LEETCODE
 3. Decide:
    SAME: same task, same input/output meaning, examples agree (variable names, wording, 0/1-indexing
          presentation or input format may differ). -> use that LeetCode problem (Step 3A).
-         If DomJudge's input/output format differs, add a "DomJudge version" note (Step 4).
+         If DomJudge's input/output format differs, add a "DomJudge version" section (Step 4).
    VARIANT: the teacher changed the task (count instead of list, extra constraint, different limits that
          change the method, combined problems…). -> write it yourself (Step 3B) and end the statement with:
          <p><em>Similar to <a href="https://leetcode.com/problems/<slug>/">LeetCode #N. Title</a> (differs in: …)</em></p>
@@ -164,19 +165,22 @@ Explanation: …</code></pre>
       (node -e "require('sharp')('x.svg').png().toFile('<scratchpad>/x.png')", then Read the PNG).
 
 
-STEP 4: NOTES
--------------
-All public, matched by title (re-imports update them):
-  "Teacher's solution"  the teacher's approach/code if given (e.g. a PDF's "Required approach"): idea in
-                        your words, code exactly as given, <p><strong>Time:</strong> … · <strong>Space:</strong> …</p>.
-                        Never invent one.
-  "Original PDF"        for PDF questions: copy the PDF to content/imports/assets/pdf/<file>.pdf, list it in
-                        "assets", and link it:
-                        <a data-file-attachment href="asset:<file>.pdf" data-name="<file>.pdf" data-size="<bytes>" data-mime="application/pdf"><file>.pdf</a>
-                        Put any "the PDF's example is wrong" remark here too.
-  "DomJudge version"    when the DomJudge version of a LeetCode/already-listed problem has its own
-                        input/output format: the format + every DomJudge example + constraints.
-  "Original class notes" for a photo given as a file path (<img src="asset:<file>">).
+STEP 4: EXTRA SECTIONS IN THE STATEMENT (NOT NOTES)
+---------------------------------------------------
+NEVER add notes. Notes are the students' own space (they write their tricks there). Anything extra
+from the source goes into the question itself, in "statement_append": HTML shown below the statement
+after a divider, also below a statement fetched from LeetCode. Use <h3> headings:
+  <h3>Original PDF</h3>        for PDF questions: copy the PDF to content/imports/assets/pdf/<file>.pdf,
+                               list it in "assets", and link it:
+                               <p><a data-file-attachment href="asset:<file>.pdf" data-name="<file>.pdf" data-size="<bytes>" data-mime="application/pdf"><file>.pdf</a></p>
+                               Put any "the PDF's example is wrong" remark here too.
+  <h3>DomJudge version</h3>    when DomJudge's version of a LeetCode / already-listed problem has its own
+                               input/output format: the format + every DomJudge example + constraints.
+  <h3>Required approach</h3>   when the source itself prescribes a method or solution (e.g. a PDF's
+                               "Required approach"): idea in your words, code exactly as given, complexity.
+  <h3>From the email</h3>      a hint or reading the teacher attached (e.g. "Please read <link>").
+  For a class-notes photo given as a file path, add <h3>Original class notes</h3><img src="asset:<file>">.
+Add notes only if the user explicitly asks for one.
 
 
 STEP 5: INTENDED METHOD (ALWAYS)

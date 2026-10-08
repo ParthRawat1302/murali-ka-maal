@@ -13,12 +13,6 @@
   "assets": {
     "prob-Rope.pdf": "assets/pdf/prob-Rope.pdf"
   },
-  "notes": [
-    {
-      "title": "Original PDF",
-      "visibility": "public",
-      "html": "<p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-Rope.pdf\" data-name=\"prob-Rope.pdf\" data-size=\"81832\" data-mime=\"application/pdf\">prob-Rope.pdf</a></p>"
-    }
-  ],
-  "statement_html": "<p>Given the lengths of several ropes, connect all of them into one rope. Connecting two ropes costs the sum of their lengths. Return the minimum total cost.</p><p><strong>Input:</strong> the first line has <code>n</code>; the second line has the <code>n</code> rope lengths.</p><p><strong>Output:</strong> the minimum total cost.</p><p><strong>Example 1:</strong></p><pre><code class=\"language-plaintext\">Input:\n4\n4 3 2 6\nOutput: 29\nExplanation:\nConnect 2 + 3 = 5   -> ropes [4, 5, 6]\nConnect 4 + 5 = 9   -> ropes [6, 9]\nConnect 6 + 9 = 15  -> ropes [15]\nTotal = 5 + 9 + 15 = 29</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input:\n1\n7\nOutput: 0\nExplanation: There is already one rope.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= n &lt;= 10<sup>5</sup></code></p></li><li><p><code>1 &lt;= ropeLength[i] &lt;= 10<sup>4</sup></code> (the total cost needs 64 bits)</p></li></ul><p><em>This is LeetCode #1167 Minimum Cost to Connect Sticks (premium), so the statement here is written from the DomJudge PDF.</em></p>"
+  "statement_html": "<p>Given the lengths of several ropes, connect all of them into one rope. Connecting two ropes costs the sum of their lengths. Return the minimum total cost.</p><p><strong>Input:</strong> the first line has <code>n</code>; the second line has the <code>n</code> rope lengths.</p><p><strong>Output:</strong> the minimum total cost.</p><p><strong>Example 1:</strong></p><pre><code class=\"language-plaintext\">Input:\n4\n4 3 2 6\nOutput: 29\nExplanation:\nConnect 2 + 3 = 5   -> ropes [4, 5, 6]\nConnect 4 + 5 = 9   -> ropes [6, 9]\nConnect 6 + 9 = 15  -> ropes [15]\nTotal = 5 + 9 + 15 = 29</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input:\n1\n7\nOutput: 0\nExplanation: There is already one rope.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= n &lt;= 10<sup>5</sup></code></p></li><li><p><code>1 &lt;= ropeLength[i] &lt;= 10<sup>4</sup></code> (the total cost needs 64 bits)</p></li></ul><p><em>This is LeetCode #1167 Minimum Cost to Connect Sticks (premium), so the statement here is written from the DomJudge PDF.</em></p>",
+  "statement_append": "<h3>Original PDF</h3><p>The problem as given on DomJudge:</p><p><a data-file-attachment href=\"asset:prob-Rope.pdf\" data-name=\"prob-Rope.pdf\" data-size=\"81832\" data-mime=\"application/pdf\">prob-Rope.pdf</a></p>"
 }
