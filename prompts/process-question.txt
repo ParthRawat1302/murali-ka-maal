@@ -1,28 +1,52 @@
 ALGOWEB: HOW TO PROCESS A QUESTION THE USER GIVES YOU
 =====================================================
 
-Use this whenever the user hands you a question to add to AlgoWeb, in any form:
-  - a LeetCode link (usually from a teacher's email),
-  - a photo of class notes (board/notebook),
-  - a test question (text or photo),
-  - DomJudge problem text,
+Use this whenever the user hands you questions to add to AlgoWeb ("Murali ka maal"), in any form:
+  - LeetCode links (usually from the teacher's email),
+  - photos or text of class notes (board/notebook),
+  - test questions (text or photo),
+  - DomJudge problems (text or PDFs),
   - any mix of these, possibly with the teacher's solution.
 
-The website has NO LLM. You (Claude) do the thinking, then write a JSON file and run the import script.
+The website has NO LLM. You (Claude) do the thinking, then write JSON files and run the scripts.
 Everyone in the class sees what you add, so accuracy matters more than speed.
+
+
+THE WORKFLOW AT A GLANCE (for every question)
+---------------------------------------------
+  0. Metadata: source type, ONE label for the whole set, date.
+  1. Read the question (photos / PDFs / text) carefully.
+  2. Already in AlgoWeb?  YES -> don't re-add; tag it with this set + this set's intended topic.
+  3. Exact problem on LeetCode?  YES -> import by link.  NO -> write it up (statement, examples,
+     constraints, SVG diagrams), verify every example by brute force.
+  4. Notes: teacher's solution, original PDF, DomJudge version.
+  5. Intended topic for THIS set -> content/intents.json -> npx tsx scripts/sync-intents.ts
+  6. Import, commit + push the content files, report back.
 
 
 STEP 0: GET THE METADATA
 ------------------------
 Every question needs:
   source_type   email | test | class_notes | domjudge | other
-  source_label  the email subject / set name, ALWAYS set it so the label filter can find the set:
-                e.g. "Problem Set 1", "Problems on Stack", "Binary Heap", "Problems on ST and BST",
-                DomJudge "Practice Set 1", "Stacks and Queues", "Heap and Segment Tree".
-                (Use the label already in content/intents.json if the set exists.)
-  source_date   YYYY-MM-DD (the class/test/email/upload date, NOT today, unless it is today)
+  source_label  the set's name. ALWAYS set it, and use the SAME label for every question of the set
+                (not "Part A" / "Part B": one label per set), so the label filter shows the whole set.
+                Use the email subject or the set name the user gives.
+  source_date   YYYY-MM-DD: the email / class / test / DomJudge upload date, NOT today (unless it is).
+
+Sets so far (reuse these labels exactly when a set comes up again; see content/intents.json):
+  2026-07-23  email        Preparatory Term: C++ and Data Structures
+  2026-08-12  email        Problem Set 1
+  2026-08-24  email        Problems on Stack
+  2026-09-02  domjudge     Practice Set 1
+  2026-09-03  class_notes  Parts A, B, C
+  2026-09-06  email        Binary Heap
+  2026-09-08  class_notes  Heaps (to be discussed in class)
+  2026-09-14  domjudge     Stacks and Queues
+  2026-09-21  email        Problems on ST and BST
+  2026-10-03  domjudge     Heap and Segment Tree
+
 Rules of thumb:
-  - LeetCode link(s) from the teacher -> "email" (label = subject line)
+  - LeetCode link(s) from the teacher -> "email" (label = subject line, e.g. "Problems on Stack")
   - photo/text of class notes        -> "class_notes" (date is essential). If the user says a text is
                                         class notes, record it ONLY as class notes, even if it also
                                         reached them by email.
@@ -31,176 +55,164 @@ Rules of thumb:
 If the date or set name is missing and you can't infer it, ASK once (one short question) before importing.
 If the user says who it's for, pass --as <username> (see config/users.json); otherwise it goes to the admin.
 
-PDFs: when the user mentions PDFs, look for them yourself (usually ~/Downloads/prob-*.pdf) and read them;
-don't ask the user to paste the text. Attach each PDF to its question as a public note
-"Original PDF" (copy to content/imports/assets/pdf/ and link it with
-<a data-file-attachment href="asset:<file>.pdf" data-name="<file>.pdf" data-mime="application/pdf">).
+PDFs: when the user mentions PDFs, find and read them yourself (usually ~/Downloads/prob-*.pdf; identical
+copies like "prob-X (1).pdf" are duplicates). Don't ask the user to paste text from a PDF.
 
 
 STEP 1: UNDERSTAND THE QUESTION
 -------------------------------
-- Transcribe photos carefully: the task, input/output format, every example, constraints, and any
+- Transcribe carefully: the task, input/output format, every example, constraints, and any
   solution/approach the teacher wrote (code, dry-run tables, diagrams).
-- One photo may contain several questions; each becomes its own import file.
-- If part of the photo is unreadable or ambiguous, say what you could not read and ask; never guess
-  numbers in examples or constraints.
+- One photo/PDF may contain several questions; each becomes its own import file.
+- If something is unreadable or ambiguous, say what you could not read and ask; never guess numbers.
 
 
-STEP 2: CHECK WHETHER IT'S ALREADY IN ALGOWEB (ALWAYS, FOR EVERY QUESTION)
--------------------------------------------------------------------------
-  npx tsx scripts/find-question.ts <a few title words | leetcode url>
-Try both the LeetCode url (after Step 3) and title words, since a re-given question may have a
-different title (DomJudge rewrites LeetCode problems, e.g. "Connect Ropes" = Connect Sticks).
+STEP 2: IS IT ALREADY IN ALGOWEB? (ALWAYS, FOR EVERY QUESTION)
+-------------------------------------------------------------
+  npx tsx scripts/find-question.ts <leetcode url>
+  npx tsx scripts/find-question.ts <a few title words>
+Do both (the url after Step 3). A re-given question can have a different title: DomJudge rewrites
+LeetCode problems ("Connect Ropes" = Connect Sticks, "Circular Game" = Find the Winner of the Circular
+Game). Also compare against the written-up questions in content/imports/ by what they ask.
+
 The teacher often gives the SAME question again (another email, a DomJudge set, class notes),
-sometimes expecting a DIFFERENT method (e.g. Reverse Pairs: Binary Search on 12 Aug, BIT on 21 Sep).
-If it's already there (same problem):
+sometimes expecting a DIFFERENT method:
+  Reverse Pairs             12 Aug Problem Set 1 (Binary Search)  ->  21 Sep ST and BST (Binary Indexed Tree)
+  Remove K Digits           24 Aug Problems on Stack (Stack)      ->  14 Sep DomJudge Stacks and Queues (Stack)
+  Count Good Triplets       21 Sep ST and BST (BIT)               ->  3 Oct DomJudge Heap and Segment Tree (BIT)
+  Stock profit / median deletion   6 Sep Binary Heap email        +   8 Sep class notes (Heap)
+
+If it's ALREADY THERE (same problem):
   - Do NOT import it again (no duplicate question).
-  - Add it to the new set's group in content/intents.json with the topic intended THIS time
-    (Step 5B). That adds the new source tag (Email / DomJudge / Class notes + label + date), a
-    second highlighted topic, and makes it show up under the new date and in that set's filters.
-  - If the new version has a different input/output format or extra examples (DomJudge), add them as
-    a public note "DomJudge version" (or "Original PDF") on the existing question's import file and
-    re-import that file.
-  - Tell the user it was already listed and what you added.
+  - Add it to THIS set's group in content/intents.json with the topic intended THIS time (Step 5).
+    After sync-intents this gives it: a second source badge ("DomJudge: Stacks and Queues"), a second
+    highlighted topic if the method differs, a row under this set's date marked "given again", and it
+    matches this set in the Source / label / date filters and in Activity tracks.
+  - If this version differs (other input/output format, extra examples, a PDF), add it to the EXISTING
+    question's import file as a public note ("DomJudge version" with the format + all examples, and/or
+    "Original PDF", see Step 4) and re-import that file.
+  - Report: "already listed (first given <date/set>) -> tagged with <this set>, intended <topic>".
+  - Never create a second badge for the same set: one set = one (source_type, label, date).
 Only import a second copy if the user explicitly asks (then --allow-duplicate).
 
 
-STEP 3: LOOK FOR THE SAME PROBLEM ON LEETCODE (ALWAYS DO THIS FIRST)
---------------------------------------------------------------------
-1. Think of candidate LeetCode problems from what you know, and/or WebSearch with a distinctive phrase,
-   e.g. "leetcode <core task in a few words>".
+STEP 3: LOOK FOR THE SAME PROBLEM ON LEETCODE
+---------------------------------------------
+1. Think of candidates and/or WebSearch a distinctive phrase ("leetcode <core task in a few words>").
 2. Verify each candidate against the real statement:
      npx tsx scripts/leetcode.ts <slug-or-url> [<slug2> …]
 3. Decide:
-   SAME: same task, same input/output meaning, examples agree (variable names, wording,
-         or 0/1-indexing presentation may differ). -> use that LeetCode problem (Step 4A).
-   VARIANT: the teacher changed the task (returns a count instead of a list, extra constraint,
-         different operation, combined two problems…). -> NOT the same. Write it yourself (Step 4B),
-         and add one line at the end of the statement:
+   SAME: same task, same input/output meaning, examples agree (variable names, wording, 0/1-indexing
+         presentation or input format may differ). -> use that LeetCode problem (Step 3A).
+         If DomJudge's input/output format differs, add a "DomJudge version" note (Step 4).
+   VARIANT: the teacher changed the task (count instead of list, extra constraint, different limits that
+         change the method, combined problems…). -> write it yourself (Step 3B) and end the statement with:
          <p><em>Similar to <a href="https://leetcode.com/problems/<slug>/">LeetCode #N. Title</a> (differs in: …)</em></p>
-   NONE: nothing close. -> Step 4B.
+         You may still set leetcode_url when it's the same game with different limits (e.g. Josephus
+         with n up to 10^7): keep your own statement_html, which is what's judged.
+   NONE: nothing close. -> Step 3B.
 When unsure between SAME and VARIANT, choose VARIANT and say why in your reply.
 
+STEP 3A: IT IS A LEETCODE PROBLEM
+  Minimal JSON; the importer fetches title, difficulty, topics and the statement:
+    { "leetcode_url": "https://leetcode.com/problems/<slug>/", "source_type": "email",
+      "source_label": "Problems on Stack", "source_date": "2026-08-24", "topics": [], "notes": [ … ] }
+  Don't write statement_html. Premium (paid-only) problem: the statement is hidden, so write it
+  yourself as in 3B and keep the leetcode_url (e.g. Number of Valid Subarrays, Connect Sticks).
 
-STEP 4A: IT IS A LEETCODE PROBLEM
----------------------------------
-Write a minimal JSON. The import script fetches title, difficulty, topics and the full statement
-from LeetCode automatically:
-  {
-    "leetcode_url": "https://leetcode.com/problems/<slug>/",
-    "source_type": "email",
-    "source_label": null,
-    "source_date": "2026-10-08",
-    "topics": [],                      // extra topics from the teacher's solution, if any
-    "notes": [ … teacher's solution, see Step 5 … ]
-  }
-Do not write statement_html for LeetCode problems (the official one is fetched).
-For a premium (paid-only) problem, the statement is hidden. Write the statement yourself as in 4B
-and keep the leetcode_url.
+STEP 3B: NOT ON LEETCODE: WRITE THE QUESTION (LeetCode style)
+  Title: short, descriptive, Title Case ("Minimum Swaps to Group Ones").
+  Difficulty like LeetCode: easy = one standard idea; medium = a known technique with some insight;
+    hard = combined techniques or a non-obvious insight.
+  Topics: LeetCode tag names exactly (Array, String, Hash Table, Dynamic Programming, Math, Sorting,
+    Greedy, Depth-First Search, Breadth-First Search, Binary Search, Tree, Binary Tree, Binary Search Tree,
+    Matrix, Two Pointers, Bit Manipulation, Stack, Queue, Heap (Priority Queue), Graph, Prefix Sum,
+    Simulation, Design, Counting, Backtracking, Sliding Window, Union Find, Linked List, Monotonic Stack,
+    Trie, Recursion, Divide and Conquer, Memoization, Topological Sort, Segment Tree, Shortest Path,
+    Bitmask, Combinatorics, Number Theory, String Matching, Geometry, Game Theory, Monotonic Queue,
+    Minimum Spanning Tree, Binary Indexed Tree, Doubly-Linked List, Merge Sort, Quickselect, Ordered Set).
+    Pick them from how it's SOLVED; 2–4 is typical. Invent a name only if none fit (e.g. Matrix Exponentiation).
 
+  statement_html:
+    <p>Description. <code>nums</code> for identifiers, <sup> for powers.</p>
+    <p><strong>Input:</strong> … </p><p><strong>Output:</strong> …</p>      <- for DomJudge-style problems
+    <p><strong>Example 1:</strong></p>
+    <img src="asset:<name>-ex1.svg" alt="…">                                   <- when a picture helps
+    <pre><code class="language-plaintext">Input: …
+Output: …
+Explanation: …</code></pre>
+    … at least 2 examples, include an edge case …
+    <p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= n &lt;= 10<sup>5</sup></code></p></li> …</ul>
+  - Escape < > & as &lt; &gt; &amp;.
+  - Keep ALL the teacher's examples; add your own if there are fewer than 2.
+  - VERIFY EVERY EXAMPLE: write a brute-force reference (python/node in the scratchpad) and run it on
+    every example. The teacher's PDFs are sometimes WRONG (seen: Rank ex.4, Rich ex.1, Triplet, Good
+    Index Pairs). Then use the correct output in the statement and add a visible
+      <blockquote><p><strong>Note about the PDF:</strong> the original says X, but … so it's Y.</p></blockquote>
+    and tell the user. Never silently copy a wrong output.
+  - Constraints not given: choose ones that match the intended complexity and say they were assumed.
+    If an example breaks a stated constraint (e.g. k = 1 when 1 < k), say to handle it.
 
-STEP 4B: NOT ON LEETCODE: WRITE THE QUESTION (LeetCode style)
--------------------------------------------------------------
-Title: short and descriptive, Title Case, like a LeetCode title ("Minimum Swaps to Group Ones").
-Difficulty: judge like LeetCode would:
-  easy   = one standard idea, direct implementation (single pass, basic hashing, simple recursion)
-  medium = needs a known technique applied with some insight (DP, BFS/DFS variants, two pointers,
-           binary search on answer, heaps, monotonic stack)
-  hard   = combines techniques, non-obvious insight, or a tricky optimisation
-Topics: use LeetCode tag names exactly (Array, String, Hash Table, Dynamic Programming, Math, Sorting,
-  Greedy, Depth-First Search, Breadth-First Search, Binary Search, Tree, Binary Tree, Binary Search Tree,
-  Matrix, Two Pointers, Bit Manipulation, Stack, Queue, Heap (Priority Queue), Graph, Prefix Sum,
-  Simulation, Design, Counting, Backtracking, Sliding Window, Union Find, Linked List, Monotonic Stack,
-  Trie, Recursion, Divide and Conquer, Memoization, Topological Sort, Segment Tree, Shortest Path,
-  Bitmask, Combinatorics, Number Theory, String Matching, Geometry, Game Theory, Monotonic Queue,
-  Minimum Spanning Tree, Binary Indexed Tree, Doubly-Linked List, Hashing).
-  Pick them from how the problem is SOLVED (the teacher's solution if given), not just from the story.
-  2–4 topics is typical. Only invent a new topic name if none of these fit.
-
-statement_html structure:
-  <p>Problem description. Use <code>nums</code> for identifiers and <sup> for powers.</p>
-  <p>More paragraphs / a <ul> if the rules have several parts.</p>
-
-  <p><strong>Example 1:</strong></p>
-  <img src="asset:<name>-ex1.svg" alt="…">          <- only when a picture helps (see diagrams)
-  <pre><code class="language-plaintext">Input: nums = [2,7,11,15], target = 9
-Output: [0,1]
-Explanation: nums[0] + nums[1] == 9.</code></pre>
-
-  <p><strong>Example 2:</strong></p> …           <- at least 2 examples; include an edge case
-
-  <p><strong>Constraints:</strong></p>
-  <ul><li><p><code>1 &lt;= n &lt;= 10<sup>5</sup></code></p></li> …</ul>
-
-  (optional) <p><strong>Follow-up:</strong> …</p>
-
-- Escape < > & inside HTML as &lt; &gt; &amp;.
-- Keep the teacher's examples. If there are fewer than 2, add your own.
-- VERIFY EVERY EXAMPLE OUTPUT: write a quick reference solution (node or python in the scratchpad),
-  run it on all examples, and make sure the outputs match exactly. Fix the example or your
-  understanding if they don't.
-- If constraints weren't given, choose reasonable ones that match the intended complexity, and
-  mention in your reply that they were assumed.
-
-DIAGRAMS: add an SVG wherever LeetCode would show a picture:
-  trees, graphs, grids/matrices, linked lists, intervals on a number line, arrays with pointers/windows,
-  before/after states of an operation.
-  - Save as content/imports/assets/<date>-<slug>-<what>.svg and reference it as asset:<filename>
-    (list it in "assets": { "<filename>": "assets/<filename>" }).
-  - White background rect, width 300–600px, viewBox set, Arial/sans-serif 14–16px labels.
-  - Nodes: circles r≈20, fill #fff4e0, stroke #f59e0b (2px); edges #555 2px; arrows with a marker.
-  - Arrays: row of boxes 40×40 with values centred and small grey indices underneath; highlight the
-    important cells with fill #fff4e0 / stroke #f59e0b; pointers as labelled arrows below.
-  - Grids: square cells, walls/blocked = #555 fill, path = #00b8a3.
-  - Only draw what's in the example; the picture must match the example data exactly.
-  - Place each diagram right after its "Example N:" heading, before the Input/Output block.
+  DIAGRAMS: add an SVG wherever LeetCode would show a picture (trees, graphs, grids, linked lists,
+  number lines, arrays with pointers/windows, before/after states, stacked shapes).
+    - content/imports/assets/<date>-<slug>-<what>.svg, referenced as asset:<file> and listed in "assets".
+    - White background, width 300–600px, viewBox set, Arial 12–16px.
+    - Nodes: circles r≈20, fill #fff4e0, stroke #f59e0b 2px; edges #555 2px; arrows with a marker.
+    - Arrays: 40×40 boxes, values centred, grey indices below; highlight with #fff4e0 / #f59e0b.
+    - Draw to scale (squares are squares); nothing may overlap or be cut off.
+    - Must match the example data exactly. RENDER IT TO PNG AND LOOK at it before importing
+      (node -e "require('sharp')('x.svg').png().toFile('<scratchpad>/x.png')", then Read the PNG).
 
 
-STEP 5: NOTES (TEACHER'S SOLUTION)
-----------------------------------
-If the teacher gave a solution/approach, add it as a public note:
-  "notes": [{ "title": "Teacher's solution", "visibility": "public", "html": "…" }]
-- Short explanation of the idea in your words, then the code exactly as given (fix only obvious
-  transcription slips) in <pre><code class="language-cpp|java|python|javascript">…</code></pre>.
-- Include complexity: <p><strong>Time:</strong> O(n) · <strong>Space:</strong> O(1)</p>.
-- Dry-run tables → <table>. Board diagrams → redraw as SVG (asset) if useful.
-- If the user gave the photo as a file path, also attach it in a note titled "Original class notes"
-  (<img src="asset:<file>">) so people can check the source.
-- Don't invent a "teacher's solution". If none was given, add no note (or a note titled
-  "Approach (Claude)" only if the user asks for one).
+STEP 4: NOTES
+-------------
+All public, matched by title (re-imports update them):
+  "Teacher's solution"  the teacher's approach/code if given (e.g. a PDF's "Required approach"): idea in
+                        your words, code exactly as given, <p><strong>Time:</strong> … · <strong>Space:</strong> …</p>.
+                        Never invent one.
+  "Original PDF"        for PDF questions: copy the PDF to content/imports/assets/pdf/<file>.pdf, list it in
+                        "assets", and link it:
+                        <a data-file-attachment href="asset:<file>.pdf" data-name="<file>.pdf" data-size="<bytes>" data-mime="application/pdf"><file>.pdf</a>
+                        Put any "the PDF's example is wrong" remark here too.
+  "DomJudge version"    when the DomJudge version of a LeetCode/already-listed problem has its own
+                        input/output format: the format + every DomJudge example + constraints.
+  "Original class notes" for a photo given as a file path (<img src="asset:<file>">).
 
 
-STEP 5B: INTENDED METHOD (WHAT THE TEACHER WANTS IT SOLVED WITH)
-----------------------------------------------------------------
-Many questions can be solved several ways; the teacher gives them to practise the topic being taught.
-For EVERY question (new or already listed) record that topic in content/intents.json under the group
-for this source (source_type, source_label, source_date), keyed by LeetCode slug or exact title:
-  - Use the set's topic: subject line ("Problems on Stack", "Binary Heap"), the DomJudge set name
-    ("Heap and Segment Tree": decide per question which of the two it is), or the ?envId=… in the
-    LeetCode link (envId=binary-indexed-tree -> "Binary Indexed Tree").
-  - If no topic is given, pick the MOST probable intended technique from how it's best solved
-    (e.g. Quickselect, Monotonic Queue, Matrix Exponentiation) and add related topics normally.
-  - If the question has that topic, use it. If not, pick the closest topic it DOES have (the sync
-    script adds the topic to the question if it's missing).
-  - Usually ONE topic; at most two when the set explicitly names both. Don't highlight much.
-Then run:  npx tsx scripts/sync-intents.ts
-Effect: intended topics are shown first and softly highlighted; a question given again shows one
-badge per source, appears under each date it was given (marked "given again"), and matches the
-Source / label / date filters for every set it was in.
+STEP 5: INTENDED METHOD (ALWAYS)
+--------------------------------
+The teacher gives questions to practise the topic being taught. For EVERY question in the set, new or
+already listed, add it to this set's group in content/intents.json:
+  { "source_type": "domjudge", "source_label": "Stacks and Queues", "source_date": "2026-09-14",
+    "intended": { "<leetcode-slug or exact title>": ["Stack"], … } }
+(create the group if the set is new; keep groups sorted by date).
+Choosing the topic:
+  - The set's topic: subject line ("Problems on Stack" -> Stack, "Binary Heap" -> Heap (Priority Queue)),
+    the DomJudge set name ("Heap and Segment Tree": decide per question), or the ?envId=… in the link
+    (envId=binary-indexed-tree -> Binary Indexed Tree, envId=segment-tree -> Segment Tree).
+  - No topic given (e.g. a practice set): the MOST probable intended technique from how it's best solved
+    (Monotonic Queue, Matrix Exponentiation, Merge Sort…). If the statement itself says which method
+    (e.g. "use the recurrence, a queue simulation will time out"), follow it.
+  - Prefer the question's own tag; otherwise the closest tag (sync-intents adds a missing tag).
+  - Usually ONE topic, at most two when the set clearly names both. Don't highlight much.
+Then run:  npx tsx scripts/sync-intents.ts      (content/intents.json is the source of truth)
+Why it matters: intended topics are shown first and highlighted, drive the "given again" rows, badges and
+filters, AND the Activity page counts each question ONLY under its intended topic(s) (topic tracks such as
+Trees -> Binary Search Tree, and the weekly/monthly wraps). A question without one falls back to all its
+LeetCode tags and inflates the tracks.
 
 
-STEP 6: WRITE THE FILE AND IMPORT
----------------------------------
+STEP 6: IMPORT, SAVE, REPORT
+----------------------------
 - File: content/imports/<source_date>-<short-slug>.json   (format: content/imports/README.md)
-- Run:  npx tsx scripts/import-question.ts content/imports/<file>.json [--as <username>] [--allow-duplicate]
-  (In PowerShell, call npx tsx directly; "npm run x -- --flag" drops flags.)
-- Re-running the same file updates the same question (matched by title + source + date), so fix and
-  re-run freely.
-- If it fails with "Duplicate LeetCode problem", report the existing entry and ask the user.
-
-
-STEP 7: REPORT BACK (SHORT)
----------------------------
-For each question: title · difficulty · topics · source/date · "LeetCode #N (same problem)" or
-"written up (similar to #N, differs in …)" or "written up (no LeetCode match)" · the /q/<id> path
-printed by the script · anything assumed (constraints, unreadable parts).
+- npx tsx scripts/import-question.ts content/imports/<file>.json [--as <username>] [--allow-duplicate]
+  (In PowerShell call npx tsx directly; "npm run x -- --flag" drops flags.)
+  Re-running a file updates the same question (title + source type + date), so fix and re-run freely.
+- npx tsx scripts/sync-intents.ts
+- Commit and push the content files (imports, assets, intents.json) on main. Questions live in the
+  database, so they're on the site right away; no Vercel deploy is needed unless code changed.
+- Report back, short, per set:
+    new:      title · difficulty · intended topic (highlighted) · "LeetCode #N (same)" / "written up
+              (similar to #N, differs in …)" / "written up (no match)" · diagrams · /q/<id>
+    repeats:  "already listed (first given <date, set>) -> tagged with <this set>, intended <topic>"
+    problems: wrong PDF examples (what you used instead), assumed constraints, unreadable parts.
