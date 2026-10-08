@@ -31,7 +31,12 @@ export type QuestionListItem = {
 export function appearances(q: Pick<QuestionListItem, "source_type" | "source_label" | "source_date" | "intents">) {
   const all = [{ source_type: q.source_type, source_label: q.source_label, source_date: q.source_date }];
   for (const i of q.intents) {
-    if (!all.some((a) => a.source_type === i.source_type && a.source_date === i.source_date && a.source_label === i.source_label))
+    // same type + date is the same set even if only one side has a label
+    const same = (a: (typeof all)[number]) =>
+      a.source_type === i.source_type &&
+      a.source_date === i.source_date &&
+      (a.source_label === i.source_label || !a.source_label || !i.source_label);
+    if (!all.some(same))
       all.push({ source_type: i.source_type, source_label: i.source_label, source_date: i.source_date });
   }
   return all;
