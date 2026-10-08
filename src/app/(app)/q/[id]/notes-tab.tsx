@@ -31,7 +31,7 @@ export function NotesTab({
       .insert({
         question_id: questionId,
         visibility,
-        title: visibility === "private" ? "My private note" : "Notes",
+        title: visibility === "private" ? "My private note" : "Trick / approach",
       })
       .select("*")
       .single();
@@ -55,7 +55,8 @@ export function NotesTab({
           <Plus size={16} /> <Lock size={14} /> Private note
         </button>
         <span className="text-xs text-muted">
-          Public notes are visible to and editable by everyone. Private notes are only visible to you.
+          Public notes show your name and everyone can see and edit them (only you can delete them). Private notes
+          are only visible to you.
         </span>
       </div>
 
@@ -130,9 +131,19 @@ function NoteCard({ note, setNotes }: { note: NoteState; setNotes: Dispatch<SetS
     setNotes((list) => list.filter((n) => n.id !== note.id));
   }
 
+  const author = isOwner ? "you" : (people[note.owner_id] ?? "someone");
+  const editor = note.updated_by && note.updated_by !== note.owner_id ? (people[note.updated_by] ?? "someone") : null;
+
   return (
     <article className="space-y-2">
       <div className="flex flex-wrap items-center gap-2">
+        <span className="flex items-center gap-1.5 text-sm" title={`Note by ${people[note.owner_id] ?? "someone"}`}>
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/20 text-xs font-bold text-accent">
+            {(people[note.owner_id] ?? "?").slice(0, 1).toUpperCase()}
+          </span>
+          <span className="text-muted">by</span>
+          <b>{author}</b>
+        </span>
         {note.visibility === "private" ? (
           <span className="chip text-medium" title="Only you can see this note">
             <Lock size={12} /> Private
@@ -142,21 +153,12 @@ function NoteCard({ note, setNotes }: { note: NoteState; setNotes: Dispatch<SetS
             <Globe size={12} /> Public
           </span>
         )}
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          onBlur={saveTitle}
-          onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).blur()}
-          disabled={!canEdit}
-          className="min-w-0 flex-1 rounded-md bg-transparent px-1 py-0.5 text-base font-semibold outline-none hover:bg-surface-2 focus:bg-surface-2"
-          aria-label="Note title"
-        />
         <span className="text-xs text-muted">
-          by {people[note.owner_id] ?? "someone"}
-          {note.updated_by && ` · edited ${note.updated_by !== note.owner_id ? `by ${people[note.updated_by] ?? "someone"} ` : ""}${timeAgo(note.updated_at)}`}
+          {editor ? `edited by ${note.updated_by === profile.id ? "you" : editor} ` : "updated "}
+          {timeAgo(note.updated_at)}
         </span>
         {isOwner && (
-          <>
+          <span className="ml-auto flex items-center gap-1">
             <button className="btn-ghost py-1 text-xs" onClick={toggleVisibility}>
               {note.visibility === "public" ? <Lock size={14} /> : <Globe size={14} />}
               Make {note.visibility === "public" ? "private" : "public"}
@@ -164,9 +166,18 @@ function NoteCard({ note, setNotes }: { note: NoteState; setNotes: Dispatch<SetS
             <button className="btn-ghost py-1 hover:text-hard" onClick={remove} title="Delete note">
               <Trash2 size={14} />
             </button>
-          </>
+          </span>
         )}
       </div>
+      <input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        onBlur={saveTitle}
+        onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).blur()}
+        disabled={!canEdit}
+        className="w-full rounded-md bg-transparent px-1 py-0.5 text-base font-semibold outline-none hover:bg-surface-2 focus:bg-surface-2"
+        aria-label="Note title"
+      />
       <DocEditor
         value={note.content}
         version={note.docVersion}
