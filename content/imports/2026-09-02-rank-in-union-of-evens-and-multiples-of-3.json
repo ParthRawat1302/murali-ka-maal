@@ -1,0 +1,17 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Practice Set 1",
+  "source_date": "2026-09-02",
+  "title": "K-th Largest in the Union of Evens and Multiples of 3",
+  "difficulty": "medium",
+  "topics": [
+    "Math",
+    "Binary Search",
+    "Number Theory"
+  ],
+  "leetcode_url": null,
+  "assets": {
+    "2026-09-02-rank-in-union-ex1.svg": "assets/2026-09-02-rank-in-union-ex1.svg"
+  },
+  "statement_html": "<p>You are given four positive integers <code>a, b, c, d</code> (with <code>a &lt;= b</code> and <code>c &lt;= d</code>). Define:</p><ul><li><p><code>S1</code> = the set of all even numbers in <code>[a, b]</code> (inclusive),</p></li><li><p><code>S2</code> = the set of all multiples of 3 in <code>[c, d]</code> (inclusive).</p></li></ul><p>Let <code>U = S1 ∪ S2</code>. The <strong>rank</strong> of an element <code>x</code> in a set <code>S</code> is <code>rank(x) = 1 + (number of elements of S greater than x)</code>, i.e. elements are ranked in descending order: the largest has rank 1, the second largest rank 2, and so on.</p><p>You are also given an integer <code>k</code>. Find the element of <code>U</code> with rank <code>k</code>. If there is none (<code>k &gt; |U|</code> or <code>k &lt; 1</code>), print <code>-1</code>.</p><p><strong>Input:</strong> one line with five integers <code>a b c d k</code>.</p><p><strong>Output:</strong> the element with rank <code>k</code> in <code>U</code>, or <code>-1</code>.</p><p><strong>Example 1:</strong></p><img src=\"asset:2026-09-02-rank-in-union-ex1.svg\" alt=\"number line 1 to 15 marking evens up to 10 and multiples of 3 from 5 to 15\"><pre><code class=\"language-plaintext\">Input: 1 10 5 15 3\nOutput: 10\nExplanation: S1 = {2,4,6,8,10}, S2 = {6,9,12,15}, U = {2,4,6,8,9,10,12,15}.\nDescending: 15, 12, 10, ... so rank 3 is 10.</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input: 1 5 6 10 1\nOutput: 9\nExplanation: U = {2,4,6,9}; the largest is 9.</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input: 1 1 1 1 1\nOutput: -1\nExplanation: S1 and S2 are both empty.</code></pre><p><strong>Example 4:</strong></p><pre><code class=\"language-plaintext\">Input: 2 100 3 100 10\nOutput: 87\nExplanation: |U| = 50 + 33 - 16 = 67 (multiples of 6 are counted once).\nDescending: 100, 99, 98, 96, 94, 93, 92, 90, 88, 87, so rank 10 is 87.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>1 &lt;= a &lt;= b &lt;= 10<sup>9</sup></code></p></li><li><p><code>1 &lt;= c &lt;= d &lt;= 10<sup>9</sup></code></p></li><li><p><code>1 &lt;= k &lt;= 10<sup>18</sup></code></p></li></ul><blockquote><p><strong>Note about the PDF:</strong> the original gives <code>94</code> for Example 4, but 94 has rank 5. By the definition the 10th largest is <code>87</code> (listed above).</p></blockquote><p><em>Originally from the CSE 102P DSA Lab (Sec A) Test 1, 4 February 2026.</em></p><p><em>Similar to <a href=\"https://leetcode.com/problems/ugly-number-iii/\">LeetCode #1201. Ugly Number III</a> (differs in: two different ranges, descending rank, and -1 when k is too large).</em></p>"
+}

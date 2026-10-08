@@ -1,0 +1,14 @@
+{
+  "source_type": "domjudge",
+  "source_label": "Practice Set 1",
+  "source_date": "2026-09-02",
+  "title": "Count Rich People",
+  "difficulty": "medium",
+  "topics": [
+    "Array",
+    "Sorting",
+    "Binary Search"
+  ],
+  "leetcode_url": null,
+  "statement_html": "<p>You are given an array <code>wealth</code> of <code>n</code> positive integers, where <code>wealth[i]</code> is the wealth of person <code>i</code>, and an integer <code>k</code>.</p><p>Person <code>i</code> is <strong>rich</strong> if <strong>not more than</strong> <code>k</code> people have wealth <strong>greater than</strong> <code>k × wealth[i]</code>, i.e. <code>count(j : wealth[j] &gt; k × wealth[i]) &lt;= k</code>.</p><p>Return the number of rich people.</p><p><strong>Input:</strong> the first line has <code>n</code> and <code>k</code>; the second line has the <code>n</code> values of <code>wealth</code>.</p><p><strong>Output:</strong> a single integer, the number of rich people.</p><p><strong>Example 1:</strong></p><pre><code class=\"language-plaintext\">Input:\n6 2\n10 3 5 20 1 4\nOutput: 5\nExplanation:\n- 10: more than 20? none (0)          -> rich\n- 3:  more than 6?  10, 20 (2)        -> rich\n- 5:  more than 10? 20 (1)            -> rich\n- 20: more than 40? none (0)          -> rich\n- 1:  more than 2?  3, 5, 10, 20, 4 (5) -> not rich\n- 4:  more than 8?  10, 20 (2)        -> rich</code></pre><p><strong>Example 2:</strong></p><pre><code class=\"language-plaintext\">Input:\n5 1\n5 10 2 8 1\nOutput: 2\nExplanation: Only 10 (0 people above 10) and 8 (only 10 is above 8) are rich.</code></pre><p><strong>Example 3:</strong></p><pre><code class=\"language-plaintext\">Input:\n4 2\n2 2 2 2\nOutput: 4\nExplanation: Nobody has more than 4, so everyone is rich.</code></pre><p><strong>Constraints:</strong></p><ul><li><p><code>2 &lt;= n &lt;= 2 × 10<sup>5</sup></code></p></li><li><p><code>1 &lt; k &lt; n</code> (but Example 2 uses <code>k = 1</code>, so handle <code>k = 1</code> too)</p></li><li><p><code>1 &lt;= wealth[i] &lt;= 10<sup>9</sup></code> (<code>k × wealth[i]</code> needs 64 bits)</p></li></ul><blockquote><p><strong>Note about the PDF:</strong> the original gives <code>4</code> for Example 1, but its own explanation marks five people (10, 3, 5, 20, 4) as rich, so the answer is <code>5</code>. It also leaves 4 out of the list for wealth 1, which doesn't change that person's result.</p></blockquote><p><em>Originally from the CSE 102P DSA Lab (Sec A) Test 1, 4 February 2026.</em></p>"
+}

@@ -182,6 +182,15 @@
         ],
         "Maximum-Sum Bounded Subarray Length": [
           "Monotonic Queue"
+        ],
+        "K-th Largest in the Union of Evens and Multiples of 3": [
+          "Binary Search"
+        ],
+        "Count Rich People": [
+          "Binary Search"
+        ],
+        "K-Step Fibonacci Modulo M": [
+          "Matrix Exponentiation"
         ]
       }
     },
