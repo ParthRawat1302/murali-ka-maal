@@ -1,4 +1,4 @@
-# Murali ka maal (AlgoWeb)
+# Murali_Sir (AlgoWeb)
 
 A private class tracker for DSA practice questions: LeetCode links from email, DomJudge problems, and
 questions from class notes. Each person tracks their own progress; statements and notes are shared rich
