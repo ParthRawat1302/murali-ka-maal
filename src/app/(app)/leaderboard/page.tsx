@@ -6,7 +6,7 @@ import { POINTS, score } from "@/lib/score";
 import { supabaseServer } from "@/lib/supabase/server";
 import type { Difficulty } from "@/lib/types";
 
-export const metadata: Metadata = { title: "Leaderboard · Murali ka maal" };
+export const metadata: Metadata = { title: "Leaderboard · Murali Sir" };
 
 type Row = { user_id: string; display_name: string; last_solved_at: string | null } & Record<Difficulty, number>;
 

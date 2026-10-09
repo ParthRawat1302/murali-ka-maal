@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 // Lets phones "Add to Home screen" / install the site as an app.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Murali ka maal",
-    short_name: "Murali ka maal",
+    name: "Murali Sir",
+    short_name: "Murali Sir",
     description: "Class DSA practice questions, progress and notes",
     start_url: "/",
     display: "standalone",

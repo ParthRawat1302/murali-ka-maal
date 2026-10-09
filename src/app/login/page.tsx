@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { LAST_NAME_COOKIE } from "@/lib/auth";
 import { LoginForm } from "./login-form";
 
-export const metadata: Metadata = { title: "Sign in · Murali ka maal" };
+export const metadata: Metadata = { title: "Sign in · Murali Sir" };
 
 export default async function LoginPage() {
   const lastName = (await cookies()).get(LAST_NAME_COOKIE)?.value ?? "";
@@ -17,7 +17,7 @@ export default async function LoginPage() {
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-lg font-bold text-accent-fg">
             {"{ }"}
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight">Murali ka maal</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Murali Sir</h1>
           <p className="mt-1 text-sm text-muted">Class DSA practice tracker</p>
         </div>
         <Suspense>

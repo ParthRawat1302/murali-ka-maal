@@ -15,7 +15,7 @@ import {
 import { loadActivity } from "@/lib/activity-data";
 import { requireProfile } from "@/lib/auth";
 
-export const metadata: Metadata = { title: "Your activity · Murali ka maal" };
+export const metadata: Metadata = { title: "Your activity · Murali Sir" };
 
 export default async function ActivityPage() {
   const profile = await requireProfile();

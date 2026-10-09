@@ -186,7 +186,7 @@ export function WrapStory({ wrap, onClose }: { wrap: Wrap; onClose: () => void }
           ))}
         </div>
         <div className="flex items-center justify-between px-4 pt-3 text-xs font-semibold uppercase tracking-wider text-white/80">
-          <span>Murali ka maal · {wrap.kind === "week" ? "Weekly" : "Monthly"} wrap</span>
+          <span>Murali Sir · {wrap.kind === "week" ? "Weekly" : "Monthly"} wrap</span>
           <button onClick={onClose} className="rounded-full p-1 hover:bg-white/20" aria-label="Close">
             <X size={18} />
           </button>

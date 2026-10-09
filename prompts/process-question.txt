@@ -1,7 +1,7 @@
 ALGOWEB: HOW TO PROCESS A QUESTION THE USER GIVES YOU
 =====================================================
 
-Use this whenever the user hands you questions to add to AlgoWeb ("Murali ka maal"), in any form:
+Use this whenever the user hands you questions to add to AlgoWeb ("Murali Sir"), in any form:
   - LeetCode links (usually from the teacher's email),
   - photos or text of class notes (board/notebook),
   - test questions (text or photo),

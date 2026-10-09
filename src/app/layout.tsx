@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Murali ka maal",
+  title: "Murali Sir",
   description: "Class DSA practice questions, progress and notes",
-  appleWebApp: { capable: true, title: "Murali ka maal", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "Murali Sir", statusBarStyle: "default" },
   icons: { apple: "/apple-touch-icon.png" },
 };
 

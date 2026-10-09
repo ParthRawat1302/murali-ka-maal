@@ -9,7 +9,7 @@ export async function generateMetadata(props: PageProps<"/q/[id]">): Promise<Met
   const { id } = await props.params;
   const supabase = await supabaseServer();
   const { data } = await supabase.from("questions").select("title").eq("id", id).maybeSingle();
-  return { title: data ? `${data.title} · Murali ka maal` : "Murali ka maal" };
+  return { title: data ? `${data.title} · Murali Sir` : "Murali Sir" };
 }
 
 export default async function QuestionPage(props: PageProps<"/q/[id]">) {

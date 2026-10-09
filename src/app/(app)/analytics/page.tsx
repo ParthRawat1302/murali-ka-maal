@@ -5,7 +5,7 @@ import { serverNow } from "@/lib/dates";
 import { supabaseAdmin, supabaseServer } from "@/lib/supabase/server";
 import { SessionsTable, type SessionRow, type UserSummary } from "./sessions-table";
 
-export const metadata: Metadata = { title: "Analytics · Murali ka maal" };
+export const metadata: Metadata = { title: "Analytics · Murali Sir" };
 
 const ONLINE_MS = 2.5 * 60_000;
 

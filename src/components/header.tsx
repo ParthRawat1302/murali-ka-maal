@@ -32,7 +32,7 @@ export function Header() {
           <span className="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-xs font-bold text-accent-fg">
             {"{}"}
           </span>
-          <span>Murali ka maal</span>
+          <span>Murali Sir</span>
         </Link>
         <nav className="hidden items-center gap-1 sm:flex">
           {links.map(({ href, label, icon: Icon }) => (
